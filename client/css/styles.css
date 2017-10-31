@@ -1,0 +1,26 @@
+body {
+    font-family: "Arial", sans-serif;
+}
+
+.bar {
+    fill: #2980b9;
+}
+
+.axis {
+    font-size: 13px;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    display: none;
+}
+
+.label {
+    font-size: 13px;
+}
+
+.slice text {
+    font-size: 16pt;
+    font-family: Arial;
+} 

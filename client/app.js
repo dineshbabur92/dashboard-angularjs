@@ -1,0 +1,1 @@
+var efasApp = angular.module("efasApp", ["ngRoute", "ngResource"]);

@@ -1,0 +1,33 @@
+{
+  "name": "EFAS Dashboard",
+  "description": "Reports vehicle check-in data",
+  "dependencies": {
+    "body-parser": "*",
+    "express": "*",
+    "express-session": "*",
+    "http-status": "*",
+    "jsonwebtoken": "^7.4.3",
+    "mongoose": "*",
+    "morgan": "*",
+    "mysql": "^2.15.0",
+    "passport": "^0.4.0",
+    "passport-facebook": "*",
+    "passport-jwt": "^3.0.0",
+    "sql": "^0.78.0",
+    "stripe": "*",
+    "superagent": "*",
+    "underscore": "*",
+    "wagner-core": "*"
+  },
+  "devDependencies": {
+    "gulp": "*",
+    "gulp-mocha": "*",
+    "mocha": "*",
+    "nodemon": "^1.11.0"
+  },
+  "scripts": {
+    "test": "mocha test.js",
+    "watch": "gulp watch",
+    "nodemon": "nodemon index.js"
+  }
+}
