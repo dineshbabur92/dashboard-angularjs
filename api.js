@@ -21,5 +21,14 @@ module.exports = function(wagner){
 		);
 	}}));
 
+	api.get("/filters", wagner.invoke(function(db){
+		return function(req, res){
+			db.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
+			  if (error) throw error;
+			  res.json({message: 'The solution is: ' + results[0].solution});
+			}
+		);
+	}}));
+
 	return api;
 }

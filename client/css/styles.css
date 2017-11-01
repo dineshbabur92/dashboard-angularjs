@@ -1,3 +1,8 @@
+html, body, input, select, textarea
+{
+    font-size: 1.05em !important;
+}
+
 body {
     font-family: "Arial", sans-serif;
 }
@@ -23,4 +28,51 @@ body {
 .slice text {
     font-size: 16pt;
     font-family: Arial;
-} 
+}
+
+div.svg-holder{
+    padding: 0;
+}
+
+.filter-holder{
+    height: 85vh;
+    overflow: auto;
+}
+
+.filter-holder .filter-name{
+    font-size: 1em;
+}
+
+.filter-holder .filter-item-name{
+    font-size: .8em;
+}
+
+hr{
+    margin: 0px;
+}
+
+#sidepane{
+    z-index: 1;
+    position: fixed;
+    height: 500px;
+    width: 200px;
+    left: 0;
+    top: 0;
+    background: lightgray;
+}
+
+#sidepane-button{
+    z-index: 1;
+    position: fixed;
+    height: 50px;
+    width: 50px;
+    left: 200px;
+    top: 0;
+    background: red;
+}
+
+/*#sidepane-button{
+    left: 0px;
+    transition: 1s;
+}
+*/
