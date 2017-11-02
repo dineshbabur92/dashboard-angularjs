@@ -14,6 +14,7 @@ module.exports = function(wagner){
 
 	api.get("/report", wagner.invoke(function(db){
 		return function(req, res){
+			console.log(req.params);
 			db.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
 			  if (error) throw error;
 			  res.json({message: 'The solution is: ' + results[0].solution});

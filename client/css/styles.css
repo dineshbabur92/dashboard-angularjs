@@ -5,7 +5,15 @@ html, body, input, select, textarea
 
 body {
     font-family: "Arial", sans-serif;
+    /*background: lightgray;*/
 }
+
+/*div[class*="col-md-"]{
+    background-color: white;
+    border: .5px solid gray;
+    border-radius: 10px;
+    padding: 1px;
+}*/
 
 .bar {
     fill: #2980b9;
@@ -34,16 +42,16 @@ div.svg-holder{
     padding: 0;
 }
 
-.filter-holder{
-    height: 85vh;
+#filter-holder{
+    height: 80vh;
     overflow: auto;
 }
 
-.filter-holder .filter-name{
+.filter-name{
     font-size: 1em;
 }
 
-.filter-holder .filter-item-name{
+.filter-item-name{
     font-size: .8em;
 }
 
@@ -76,3 +84,10 @@ hr{
     transition: 1s;
 }
 */
+
+#apply-filters-button{
+    width: 100%;
+    margin-bottom: 1em;
+    background-color: #67b7dc;
+    border-color: #67b7dc;
+}

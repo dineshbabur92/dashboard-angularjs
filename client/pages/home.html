@@ -3,14 +3,21 @@
 	</div>
 	<div id="sidepane-button" class="">
 	</div> -->
-	<div class="col-md-3 filter-holder">
-		<div ng-repeat="(filter_name, filter_items) in filters">
-			<div class="filter-name">{{ filter_name }}</div>
-			<hr/>
-			<div class="list-group checked-list-box filter-items">
-				<div class="" ng-repeat="item in filter_items">
-					<input type="checkbox" for-item="{{item}}"/>
-					<span class="filter-item-name">{{item}}</span>
+	<div class="col-md-3">
+		<button type="button" class="btn btn-primary" id="apply-filters-button" 
+			ng-click="getReport()">
+			APPLY <i class="fa fa-play" aria-hidden="true"></i>
+		</button>
+		<div id="filter-holder">
+			<div ng-repeat="(filter_name, filter_items) in filters">
+				<div class="filter-name">{{ filter_name }}</div>
+				<hr/>
+				<div class="list-group checked-list-box filter-items">
+					<div class="" ng-repeat="item in filter_items">
+						<input type="checkbox" for-item="{{item}}" 
+							ng-click="filterChanged(this, $event)"/>
+						<span class="filter-item-name">{{item}}</span>
+					</div>
 				</div>
 			</div>
 		</div>
