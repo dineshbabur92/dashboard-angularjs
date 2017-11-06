@@ -59,25 +59,51 @@ hr{
     margin: 0px;
 }
 
-#sidepane{
+#left-sidepane{
     z-index: 1;
     position: fixed;
-    height: 500px;
-    width: 200px;
+    height: 100vh;
+    width: 300px;
+    background-color: lightgray;
     left: 0;
-    top: 0;
-    background: lightgray;
+    top:0;
+    display: flex;
+    flex-direction: row;
+    transition: left 1s;
 }
 
-#sidepane-button{
-    z-index: 1;
-    position: fixed;
-    height: 50px;
-    width: 50px;
-    left: 200px;
-    top: 0;
-    background: red;
+#left-sidepane > #header{
+    display: flex;
+    height: 3em;
+    flex-grow: 1;
 }
+
+#title-area, #toggle-button{
+    height: 100%;
+    background: red;
+    border: 1px solid black;
+    padding: .25em;
+}
+
+#title-area{
+    flex-grow: 1;
+    /*flex-shrink: 1;*/
+}
+#toggle-button{
+    width: 3em;
+}
+
+/* The starting CSS styles for the enter animation */
+.repeated-item.ng-enter {
+  /*transition: 0.5s linear all;
+  opacity:0;*/
+}
+
+/* The finishing CSS styles for the enter animation */
+.repeated-item.ng-enter-active {
+  background-color: green;
+}
+
 
 /*#sidepane-button{
     left: 0px;

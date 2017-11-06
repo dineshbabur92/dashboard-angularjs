@@ -5,6 +5,11 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "d3Service", fun
     // $scope.isFilterChanged = false;
     $log.log("requesting /overview, filters: " + $scope.filters);
 
+    $scope.toggleSidePane = function(toggleButton){
+    	console.log(toggleButton.$parent);
+    	toggleButton.$parent.css({"background-color": "green"});
+    }
+
     $scope.filterChanged = function(elt, event){
 
     	if(event.target.checked){

@@ -1,1 +1,1 @@
-var efasApp = angular.module("efasApp", ["ngRoute", "ngResource"]);
+var efasApp = angular.module("efasApp", ["ngRoute", "ngResource", "ngAnimate"]);
