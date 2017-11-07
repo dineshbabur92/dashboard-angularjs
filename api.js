@@ -15,9 +15,26 @@ module.exports = function(wagner){
 	api.get("/report", wagner.invoke(function(db){
 		return function(req, res){
 			console.log(req.params);
-			db.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
-			  if (error) throw error;
-			  res.json({message: 'The solution is: ' + results[0].solution});
+			var chart_query = " \
+				select \
+					a.fehler_ort_text, \
+					count(b.checkin_id) as checkins_count \
+				from fehlerspeicher a \
+					inner join checkins b \
+					on a.checkin_id = b.checkin_id \
+				group by 1 \
+				order by count(b.checkin_id) desc \
+				limit 0,20; \
+			";
+			db.query(chart_query, function (error, results, fields) {
+				if (error) throw error;
+				console.log(results[0]);
+				res.json({
+					data: results,
+					title: "Top 20 FSP Entries per 1000 KM",
+					category_field: "fehler_ort_text",
+					value_field: "checkins_count"
+				});
 			}
 		);
 	}}));

@@ -5,6 +5,7 @@ html, body, input, select, textarea
 
 body {
     font-family: "Arial", sans-serif;
+    /*width: 98vw;*/
     /*background: lightgray;*/
 }
 
@@ -38,10 +39,18 @@ body {
     font-family: Arial;
 }
 
+g{
+    font-size: 3px;
+    text-align: left;
+    text-overflow: wrap;
+}
 div.svg-holder{
     padding: 0;
 }
 
+#left-panel{
+    /*border-right: 1px solid lightgray;*/
+}
 #filter-holder{
     height: 80vh;
     overflow: auto;
