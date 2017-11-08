@@ -45,77 +45,7 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "d3Service", fun
 
 			$log.log(response);
 
-			// d3Service.createChart("horizontal-bar", {
-	  //   		data: [
-		 //            {"error_name": "error 1", "check_ins": 23.5},
-		 //            {"error_name": "error 2", "check_ins": 24.5},
-		 //            {"error_name": "error 3", "check_ins": 25.5},
-		 //            {"error_name": "error 4", "check_ins": 26.5},
-		 //            {"error_name": "error 5", "check_ins": 27.5},
-		 //            {"error_name": "error 6", "check_ins": 12.5},
-		 //            {"error_name": "error 7", "check_ins": 28.5},
-		 //            {"error_name": "error 8", "check_ins": 24.5},
-		 //            {"error_name": "error 9", "check_ins": 22.5},
-		 //            {"error_name": "error 10", "check_ins": 23.5},
-		 //            {"error_name": "error 11", "check_ins": 23.5},
-		 //            {"error_name": "error 12", "check_ins": 21.5},
-		 //            {"error_name": "error 13", "check_ins": 23.5},
-		 //            {"error_name": "error 14", "check_ins": 22.5},
-		 //            {"error_name": "error 15", "check_ins": 23.5},
-		 //            {"error_name": "error 16", "check_ins": 24.5},
-		 //            {"error_name": "error 17", "check_ins": 13.5},
-		 //            {"error_name": "error 18", "check_ins": 13.5},
-		 //            {"error_name": "error 19", "check_ins": 22.5},
-		 //            {"error_name": "error 20", "check_ins": 33.5}
-	  //           ],
-	  //           title: "Top 20 FSP Entries per 1000 KM",
-	  //           category_field: "error_name",
-	  //           value_field: "check_ins",
-	  //           draw_height: 1
-
-	  //   	}, "chart1");
-
 	  		d3Service.createChart("horizontal-bar", {
-	    		data: response.data.data,
-	            title: response.data.title,
-	            category_field: response.data.category_field,
-	            value_field: response.data.value_field,
-	            draw_height: 1
-
-	    	}, "chart1");
-
-			d3Service.createChart("pie", {
-	    		data: [
-	    			{
-	                    "SE_Date": "11-01",
-	                        "count": 156.9
-	                }, {
-	                    "SE_Date": "03-02",
-	                        "count": 131.1
-	                }, {
-	                    "SE_Date": "29-13",
-	                        "count": 115.8
-	                }, {
-	                    "SE_Date": "13-04",
-	                        "count": 109.9
-	                }, {
-	                    "SE_Date": "09-05",
-	                        "count": 108.3
-	                }, {
-	                    "SE_Date": "21-06",
-	                        "count": 65
-	                }, {
-	                    "SE_Date": "17-07",
-	                        "count": 50
-	                }
-	            ],
-	            title_field: "SE_Date",
-	            value_field: "count",
-	            draw_height: 0.5
-
-	    	}, "chart2");
-
-			d3Service.createChart("horizontal-bar", data = {
 	    		data: [
 		            {"error_name": "error 1", "check_ins": 23.5},
 		            {"error_name": "error 2", "check_ins": 24.5},
@@ -126,14 +56,47 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "d3Service", fun
 		            {"error_name": "error 7", "check_ins": 28.5},
 		            {"error_name": "error 8", "check_ins": 24.5},
 		            {"error_name": "error 9", "check_ins": 22.5},
-		            {"error_name": "error 10", "check_ins": 23.5}
+		            {"error_name": "error 10", "check_ins": 23.5},
+		            {"error_name": "error 11", "check_ins": 23.5},
+		            {"error_name": "error 12", "check_ins": 21.5},
+		            {"error_name": "error 13", "check_ins": 23.5},
+		            {"error_name": "error 14", "check_ins": 22.5},
+		            {"error_name": "error 15", "check_ins": 23.5},
+		            {"error_name": "MSA-Start KL50 (MSA/Zustart oder\n Primärstart-Hybrid): DME-Requests\n fehlerhaft", "check_ins": 24.5},
+		            {"error_name": "error 17", "check_ins": 13.5},
+		            {"error_name": "error 18", "check_ins": 13.5},
+		            {"error_name": "error 19", "check_ins": 22.5},
+		            {"error_name": "error 20", "check_ins": 33.5}
 	            ],
-	            title: "Top 20 FSP Entries per 1000 KM",
+	            title: response.data.titles.chart1,
 	            category_field: "error_name",
 	            value_field: "check_ins",
-	            draw_height: 0.5
+	            draw_height: 1
+	    	}, "chart1");
 
+			d3Service.createChart("pie", {
+	    		data: response.data.results.chart2,
+	    		title: response.data.titles.chart2,
+	            title_field: response.data.category_fields.chart2,
+	            value_field: response.data.value_fields.chart2,
+	            draw_height: 0.5
+	    	}, "chart2");
+
+			d3Service.createChart("horizontal-bar", data = {
+	    		data: response.data.results.chart3,
+	            title: response.data.titles.chart3,
+	            category_field: response.data.category_fields.chart3,
+	            value_field: response.data.value_fields.chart3,
+	            draw_height: 0.5
 	    	}, "chart3");
+
+	    	d3Service.createChart("horizontal-bar", data = {
+	    		data: response.data.results.chart4,
+	            title: response.data.titles.chart4,
+	            category_field: response.data.category_fields.chart4,
+	            value_field: response.data.value_fields.chart4,
+	            draw_height: 1
+	    	}, "chart4");
 
 		}, function(error) {
 			$log.log("error: " + error);
