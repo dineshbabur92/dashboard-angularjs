@@ -1,137 +1,177 @@
-efasApp.service("d3Service", function(){
+efasApp.service("charts", function(){
     
 	var container_space = $(window).innerHeight() * .85
-
-	var drawMyHorizontal = function(data, holder){
-		var data = {
-    		data: [
-	            {"error_name": "error 1", "check_ins": 23.5},
-	            {"error_name": "error 2", "check_ins": 24.5},
-	            {"error_name": "error 3", "check_ins": 25.5},
-	            {"error_name": "error 4", "check_ins": 26.5},
-	            {"error_name": "error 5", "check_ins": 27.5},
-	            {"error_name": "error 6", "check_ins": 12.5},
-	            {"error_name": "error 7", "check_ins": 28.5},
-	            {"error_name": "error 8", "check_ins": 24.5},
-	            {"error_name": "error 9", "check_ins": 22.5},
-	            {"error_name": "error 10", "check_ins": 23.5},
-	            {"error_name": "error 11", "check_ins": 23.5},
-	            {"error_name": "error 12", "check_ins": 21.5},
-	            {"error_name": "error 13", "check_ins": 23.5},
-	            {"error_name": "error 14", "check_ins": 22.5},
-	            {"error_name": "error 15", "check_ins": 23.5},
-	            {"error_name": "error 16", "check_ins": 24.5},
-	            {"error_name": "error 17", "check_ins": 13.5},
-	            {"error_name": "error 18", "check_ins": 13.5},
-	            {"error_name": "error 19", "check_ins": 22.5},
-	            {"error_name": "error 20", "check_ins": 33.5}
-            ],
-            title: "Top 20 FSP Entries per 1000 KM",
-            category_field: "error_name",
-            value_field: "check_ins",
-            draw_height: 1
-
-    	};
-    	var holder = "container";
-		var chart_div = $("#" + holder);
-		var num_categories = data.data.length;
-		var value_min = function(){
-			var min = Number.MAX_SAFE_INTEGER;
-			for(var di in data.data){
-				if(min > data.data[di][data.value_field])
-					min = data.data[di][data.value_field];
-			}
-			return min;
-		}();
-		var value_max = function(){
-			var max = Number.MIN_SAFE_INTEGER;
-			for(var di in data.data){
-				if(max < data.data[di][data.value_field])
-					max = data.data[di][data.value_field];
-			}
-			return max;
-		}();
-		var value_step_px =  chart_div.width() / (value_max - value_min);
-
-		chart_div.append("<div class='row'> \
-				<div id='category-holder' class='col-xs-6 axis-section-horizontal'></div> \
-				<div id='value-holder' class='col-xs-6 axis-section-horizontal'></div> \
-			</div");
-		for(var di in data.data){
-			$("#category-holder").append(
-				"<div class='col-md-12 category item'>" + data.data[di][data.category_field] + 
-				"<div class='indicator'>-</div>" + 
-				"</div>"
-			);
-			$("#value-holder").append(
-				"<div class='col-md-12 category item'>" + data.data[di][data.value_field] + "</div>"
-			);
-		}
-		
-	}
-
-    var drawPie = function(data, holder){
+	
+	var drawPie = function(data, holder){
 
     	$("#" + holder).height(container_space * data.draw_height + "px");
-    	AmCharts.makeChart(holder, {
-            "type": "pie",
-            "theme": "light",
-            "titles": [
-				{
-					"text": data.title,
-					"size": 12
-				}
-			],
-            "labelsEnabled": false,
-            "dataProvider": data.data.sort(function(a,b){return a[data.value_field] > b[data.value_field] ? -1 : 1;}),
-            "titleField": data.title_field,
-            "valueField": data.value_field,
-            "balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
-            "legend": {
-            	"position": "right",
-            	"fontSize":"9em",
-                "align": "center",
-                "markerType": "circle"
-            },
-       		creditsPosition:"bottom-right"
-        });
+
+    	var input_data = [];
+    	for(var i in data.data){
+    		input_data.push({name: data.data[i][data.title_field], y: data.data[i][data.value_field]});
+    	}
+    	console.log(data);
+
+        Highcharts.chart(holder, {
+	    chart: {
+	        plotBackgroundColor: null,
+	        plotBorderWidth: null,
+	        plotShadow: false,
+	        type: 'pie'
+	    },
+	    title: {
+	        text: data.title
+	    },
+	    tooltip: {
+	        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+	    },
+	    plotOptions: {
+	        pie: {
+	            allowPointSelect: true,
+	            cursor: 'pointer',
+	            // dataLabels: {
+	            //     enabled: true,
+	            //     format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+	            //     style: {
+	            //         color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+	            //     }
+	            // },
+	            dataLabels: {
+	                enabled: false
+	            },
+	            showInLegend: true
+		        }
+	    },
+	    series: [{
+	        name: 'Brands',
+	        colorByPoint: true,
+	        data: input_data
+	    }],
+	    legend: {
+	        layout: 'vertical',
+	        align: "left",
+	        verticalAlign: "top",
+	        x: 0,
+	        y: 50,
+	        floating: true,
+	        borderWidth: .5,
+	        backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+	        shadow: false,
+	        style:{
+	        	border: 0
+	        }
+	    },
+	});
 
     }
 
     var drawHorizontalBar = function(data, holder){
 
+
     	$("#" + holder).height(container_space * data.draw_height + "px");
-    	AmCharts.makeChart(holder, {
 
-            type: "serial",
-            theme: "light",
-            dataProvider: data.data.sort(function(a,b){return a[data.value_field] > b[data.value_field] ? -1 : 1;}),
-            categoryField: data.category_field,
-            startDuration: 1,
-            rotate: true,
-            startEffect: "bounce",
+		var labels = [];
+		var values = [];
+		for(var i in data.data){
+			labels.push(data.data[i][data.category_field]);
+			values.push(data.data[i][data.value_field]);
+		}
+		values = values.sort(function(a,b){return a>b?-1:1});
 
-            categoryAxis: {
-                gridPosition: "start"
-            },
-            valueAxes: [{
-                position: "top",
-                title: data.title,
-                minorGridEnabled: true
-            }],
-            graphs: [{
-                type: "column",
-                title: data.value_field,
-                valueField: data.value_field,
-                fillAlphas:1,
-                balloonText: "<span style='font-size:13px;'>[[title]] in [[category]]:<b>[[value]]</b></span>"
-            }],
-            legend: {
-                useGraphSettings: true
-            },
-            creditsPosition:"bottom-right"
-        });
 
+    	if(holder === "chart4"){
+    		console.log("chart4 values length: " + values.length);
+    		$("#" + holder).css({"overflow": "auto", "height": values.length*25});
+    	}
+
+		Highcharts.chart(holder, {
+		    chart: {
+		        type: 'bar',
+		        marginRight: holder === "chart4" ? undefined : 50
+		    },
+		    title: {
+		        text: data.title
+		    },
+		    xAxis: {
+		        categories: labels,
+		        title: {
+		            text: null
+		        },
+		        labels: {
+
+		        },
+		        scrollbar: {
+		            enabled: true
+		        },
+		        width: holder === "chart4" ? $("#"+holder).width() *.95 : undefined,
+		    },
+		    yAxis: {
+		        min: 0,
+		        tickInterval: holder === "chart4" ? 1 : undefined,
+		        width: holder === "chart4" ? $("#"+holder).width() *.05 : undefined,
+		        title: {
+		            text: data.value_field,
+		            align: 'high'
+		        },
+		        labels: {
+		            overflow: 'justify'
+		        }
+		    },
+		    tooltip: {
+		        valueSuffix: '',
+		        positioner: function(labelWidth, labelHeight, point) {
+			        var tooltipX = point.plotX + -100;
+			        var tooltipY = point.plotY;
+			        return {
+			            x: tooltipX,
+			            y: tooltipY
+			        };
+			    },
+			    borderWidth: 0,
+			    backgroundColor: "rgba(255,255,255,1)",
+			    borderRadius: 0,
+			    shadow: true,
+			    useHTML: true,
+			    percentageDecimals: 2,
+			    backgroundColor: "rgba(255,255,255,1)"
+		    },
+		    plotOptions: {
+		        bar: {
+		            dataLabels: {
+		                enabled: true
+		            }
+		        }
+		    },
+		    tooltip: {
+		        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+		    },
+		    legend: {
+		        layout: 'vertical',
+		        align: holder == "chart4" ? "left" : "right",
+		        verticalAlign: holder == "chart4" ? "top" : "bottom",
+		        x: 0,
+		        y: -50,
+		        floating: true,
+		        borderWidth: .5,
+		        backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+		        // shadow: true
+		    },
+		    credits: {
+		        enabled: false
+		    },
+		    series: [{
+		        name: data.value_field,
+		        data: values
+		    }]
+		});
+        
+        if(holder === "chart4"){
+    		$("#" + holder).height(container_space * data.draw_height + "px");
+    		$("#"+ holder + " .highcharts-series rect").css({"display": "none"});
+    		$("#"+ holder + " .highcharts-grid-line").css({"display": "none"});
+    	}
+
+		
     }
 
     var mapCharts = {

@@ -51,6 +51,10 @@ var value_step_px =  (chart_div.width()/2) / ((value_max - value_min)*1.1);
 var bar_height = (chart_div.height() / num_categories);
 
 chart_div.append("<div class='row'> \
+		<div id='category-axis-above' class='col-xs-6 axis-section-horizontal'></div> \
+		<div id='value-axis-above' class='col-xs-6 axis-section-horizontal'></div> \
+	</div");
+chart_div.append("<div class='row'> \
 		<div id='category-holder' class='col-xs-6 axis-section-horizontal'></div> \
 		<div id='value-holder' class='col-xs-6 axis-section-horizontal'></div> \
 	</div");
@@ -62,7 +66,7 @@ for(var di in data.data){
 		+ "</div>"
 	);
 	$(".category.item").css({"height": bar_height +"px", "padding": "0px"});
-	$("#label-" + di).css({"font-size": (bar_height * 0.8) + "px", "margin-top": (bar_height * 0.1) + "px", "margin-bottom": (bar_height * 0.1) + "px", "margin-right": "3px", "flex-grow": 1, "text-align": "right"});
+	$("#label-" + di).css({"font-size": (bar_height * 0.8) + "px", "margin-top": (bar_height * 0.1) + "px", "margin-bottom": (bar_height * 0.1) + "px", "margin-right": "3px", "flex-grow": 1, "text-align": "left", "text-overflow": "ellipsis"});
 	$("#value-holder").append(
 		"<div class='col-md-12 value item'>" // + data.data[di][data.value_field] 
 		+ "<div id='bar-" + di + "'></div>"
@@ -70,3 +74,16 @@ for(var di in data.data){
 	);
 	$("#bar-" + di).css({"transition":"width linear 1s", "background-color": "#67b7dc", "width": value_step_px*(data.data[di][data.value_field]-value_min) +"px", "height": (bar_height * (8/10)) + "px", "margin-top": (bar_height * (2/10)) + "px", "margin-bottom": (bar_height * (2/10)) + "px"});
 }
+
+/*
+var categoryTextElts = $("#chart1 > div > div.amcharts-chart-div > svg > g:nth-child(15) > g:nth-child(1) text tspan");
+for(var i in categoryTextElts){
+	console.log($(categoryTextElts[i]).text());
+	var text = $(categoryTextElts[i]).text();
+	if(text.length > 33){
+		text = text.substring(0,30)+"...";
+		$(categoryTextElts[i]).text(text);
+	}
+}
+
+*/

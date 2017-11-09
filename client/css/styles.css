@@ -6,7 +6,9 @@ html, body, input, select, textarea
 body {
     font-family: "Arial", sans-serif;
     /*width: 98vw;*/
-    /*background: lightgray;*/
+    background: #e4e4e4;
+    padding: 50px;
+
 }
 
 /*div[class*="col-md-"]{
@@ -44,12 +46,35 @@ g{
     text-align: left;
     text-overflow: wrap;
 }
-div.svg-holder{
-    padding: 0;
+::-webkit-scrollbar { 
+    display: none; 
+}
+div.svg-holder, svg{
+    background-color: white;
+    margin-bottom: 10px;
+    border-radius: 10px;
 }
 
+div.svg-holder svg{
+    padding: 7px;
+}
+div.svg-holder, #left-panel{
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px #bdbdbd;
+    /*border: 1px solid #1abc9c;*/
+}
+#chart1{
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.amChartsLegend {
+    overflow: auto;
+}
 #left-panel{
     /*border-right: 1px solid lightgray;*/
+    background-color: white;
+    padding: 10px;
 }
 #filter-holder{
     height: 80vh;
@@ -126,3 +151,18 @@ hr{
     background-color: #67b7dc;
     border-color: #67b7dc;
 }
+
+.label {
+    z-index: 1 ;
+}
+
+.highcharts-tooltip span {
+    background-color: white;
+    opacity: 1;
+    z-index: 9999 ;
+    /*padding: 10px;*/
+}
+
+/*.tooltip {
+    padding: 5px;
+}*/
