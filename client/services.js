@@ -142,9 +142,9 @@ efasApp.service("charts", function(){
 		            }
 		        }
 		    },
-		    tooltip: {
-		        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-		    },
+		    // tooltip: {
+		    //     pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+		    // },
 		    legend: {
 		        layout: 'vertical',
 		        align: holder == "chart4" ? "left" : "right",

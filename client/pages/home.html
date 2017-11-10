@@ -21,7 +21,7 @@
 			<div ng-repeat="(filter_name, filter_items) in filters">
 				<div class="filter-name">{{ filter_name }}</div>
 				<hr/>
-				<div class="list-group checked-list-box filter-items">
+				<div class="list-group filter-items-box checked-list-box filter-items">
 					<div class="" ng-repeat="item in filter_items">
 						<input type="checkbox" for-item="{{item}}" 
 							ng-click="filterChanged(this, $event)"/>

@@ -38,12 +38,12 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "charts", functi
 
     $scope.getReport = function(){
     	 $http({
-			method: 'GET',
+			method: 'POST',
 			url: '/report',
-			data: $scope.selectedFilters
+			data: {filters: $scope.selectedFilters}
 		}).then(function(response) {
 
-			$log.log(response);
+			$log.log("report response", response);
 
 	  		charts.createChart("horizontal-bar", {
 	    		data: response.data.results.chart1,
@@ -88,19 +88,21 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "charts", functi
 			method: 'GET',
 			url: '/filters'
 		}).then(function(response) {
-			$scope.filters = {
-				"SGBD-KIEFA": ["EA", "EF"],
-				"SGBD": ["foo1", "foo2"],
-				"Serie": ["foo1", "foo2"],
-				"VIN": ["foo1", "foo2"],
-				"FSP Hex Code": ["foo1", "foo2"],
-				"I Step": ["foo1", "foo2"],
-				"Building Phase": ["foo1", "foo2"],
-				"DTC Incident": ["foo1", "foo2"],
-				"IS DTC": ["foo1", "foo2"],
-				"CheckIn Flag": ["foo1", "foo2"],
-				"E/E Priority": ["foo1", "foo2"]
-			}
+			console.log("filters' response", response);
+			// $scope.filters = {
+			// 	"SGBD-KIEFA": ["EA", "EF"],
+			// 	"SGBD": ["foo1", "foo2"],
+			// 	"Serie": ["foo1", "foo2"],
+			// 	"VIN": ["foo1", "foo2"],
+			// 	"FSP Hex Code": ["foo1", "foo2"],
+			// 	"I Step": ["foo1", "foo2"],
+			// 	"Building Phase": ["foo1", "foo2"],
+			// 	"DTC Incident": ["foo1", "foo2"],
+			// 	"IS DTC": ["foo1", "foo2"],
+			// 	"CheckIn Flag": ["foo1", "foo2"],
+			// 	"E/E Priority": ["foo1", "foo2"]
+			// }
+			$scope.filters = response.data.filters;
 		}).then(function(error){
 			$log.log("error: " + error);
 		});
