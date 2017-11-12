@@ -1,7 +1,13 @@
 efasApp.controller("homeController",["$scope", "$log", "$http", "charts", function($scope, $log, $http, charts){
 
     $scope.filters = {};
-    $scope.selectedFilters ={}
+    $scope.selectedFilters ={};
+
+    $scope.today = new Date();
+    $scope.dateFilterOptions = {"Day": 0, "Week": 7, "Month": 30, "Quarter": 90, "Year": 365, "Total": -1};
+
+    $scope.count_vehicles = 0;
+    $scope.count_checkins = 0;
     // $scope.isFilterChanged = false;
     $log.log("requesting /overview, filters: " + $scope.filters);
 
@@ -9,6 +15,27 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "charts", functi
     	console.log(toggleButton.$parent);
     	toggleButton.$parent.css({"background-color": "green"});
     }
+
+    $scope.handleDateOption = function(filter){
+    	if(filter === "Total"){
+    		$scope.selectedFilters["Date"] = [];
+    		return;
+    	}
+    	var days = $scope.dateFilterOptions[filter];
+    	$scope.selectedFilters["Date"] = [(new Date($scope.today - (days * 24* 60 * 60 * 1000))).getFullYear() + "-" 
+    		+ ((new Date($scope.today - (days * 24* 60 * 60 * 1000))).getMonth() + 1) + "-" 
+    		+ (new Date($scope.today - (days * 24* 60 * 60 * 1000))).getDate(),
+    		$scope.today.getFullYear() + "-" + ($scope.today.getMonth() + 1) + "-" + $scope.today.getDate(),
+    		];
+    }
+
+    $scope.dateOptionSelected = function(elt, event){
+    	$scope.handleDateOption(elt.filter);
+    	$(event.currentTarget).siblings().css({"background-color": "white", "color": "black"});
+    	$(event.currentTarget).css({"background-color": "#67b7dc", "color": "white"});
+    }
+
+    
 
     $scope.filterChanged = function(elt, event){
 
@@ -44,6 +71,9 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "charts", functi
 		}).then(function(response) {
 
 			$log.log("report response", response);
+
+			$scope.count_checkins = response.data.results.chart5[0].count_checkins;
+			$scope.count_vehicles = response.data.results.chart5[0].count_vehicles;
 
 	  		charts.createChart("horizontal-bar", {
 	    		data: response.data.results.chart1,
@@ -110,5 +140,20 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "charts", functi
 
     $scope.getFilters();
     $scope.getReport();
+
+     $( function() {
+	    $( "#slider-range" ).slider({
+	      range: true,
+	      min: 0,
+	      max: 24,
+	      values: [ 0, 24 ],
+	      slide: function( event, ui ) {
+	        $( "#hour-range" ).val( ui.values[ 0 ] + " to " + ui.values[ 1 ] );
+	        $scope.selectedFilters["Hour"] = ui.values
+	      }
+	    });
+	    $( "#hour-range" ).val( $( "#slider-range" ).slider( "values", 0 ) +
+	      " to " + $( "#slider-range" ).slider( "values", 1 ) );
+	  } );
 
 }]);

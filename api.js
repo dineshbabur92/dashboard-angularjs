@@ -71,9 +71,17 @@ module.exports = function(wagner){
 				queries[i] = queries_base[i];
 			}
 			for(var i in queries){
+				if(i==="chart5")
+				{
+					queries[i] =  queries[i][0] + appendConditions(queries[i][1], {
+							"Date": req.body.filters["Date"] ? req.body.filters["Date"] : [], 
+							"Hour": req.body.filters["Hour"] ? req.body.filters["Hour"] : []
+						}, filterFieldMapping);
+					continue;
+				}
 				queries[i] = queries[i][0] + appendConditions(queries[i][1], req.body.filters, filterFieldMapping) + queries[i][2];
 			}
-			console.log(queries);
+			console.log(queries.chart5);
 			var all_results = {};
 			// console.log("Querying for chart 1: " + queries.chart1);
 			db.query(queries.chart1, function (error, results, fields) {
@@ -101,27 +109,34 @@ module.exports = function(wagner){
 								return;
 							}
 							all_results.chart4 = results;
-							// console.log(all_results);
-							res.json({
-								results: all_results,
-								titles: {
-									chart1: "Top 20 FSP Entries per 1000 KM",
-									chart2: "Actual I-Step Distribution(KW 40)",
-									chart3: "Top 10 Driven KM",
-									chart4: "Single Event DTCs"
-								},
-								category_fields: {
-									chart1: "FSP_Entry",
-									chart2: "I_Step",
-									chart3: "VIN",
-									chart4: "FSP_Entry"
-								},
-								value_fields: {
-									chart1: "Occurences",
-									chart2: "Checkins",
-									chart3: "KM_Driven",
-									chart4: "Checkins"
+							db.query(queries.chart5, function (error, results, fields) {
+								if (error){
+									res.json({message: "chart5 error"});
+									return;
 								}
+								all_results.chart5 = results;
+								// console.log(all_results);
+								res.json({
+									results: all_results,
+									titles: {
+										chart1: "Top 20 FSP Entries per 1000 KM",
+										chart2: "Actual I-Step Distribution(KW 40)",
+										chart3: "Top 10 Driven KM",
+										chart4: "Single Event DTCs"
+									},
+									category_fields: {
+										chart1: "FSP_Entry",
+										chart2: "I_Step",
+										chart3: "VIN",
+										chart4: "FSP_Entry"
+									},
+									value_fields: {
+										chart1: "Occurences",
+										chart2: "Checkins",
+										chart3: "KM_Driven",
+										chart4: "Checkins",
+									}
+								});
 							});
 						});
 					});

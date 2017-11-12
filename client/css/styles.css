@@ -6,14 +6,15 @@ html, body, input, select, textarea
 body {
     font-family: "Arial", sans-serif;
     /*width: 98vw;*/
-    background: #e4e4e4;
+    background: #505050;
     padding: 50px;
+    overflow: auto;
 
 }
 
 .filter-items-box{
     overflow: auto;
-    max-height: 200px;
+    max-height: 100px;
 }
 
 /*div[class*="col-md-"]{
@@ -23,6 +24,45 @@ body {
     padding: 1px;
 }*/
 
+#timeline-filter, #summary{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: .25em;
+}
+#timeline-filter > div, #summary > div {
+    flex-grow: 1;
+    order: 1;
+    padding: .25em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: .25em;
+}
+
+#hour-filter{
+    /*flex-direction: column;*/
+}
+#hour-filter div{
+    width: 100%;
+}
+
+#date-filter{
+    padding: 0em;
+    border: 1px solid lightgray;
+}
+.date-filter-item{
+    border-right: 1px solid lightgray;
+    flex-grow: 1;
+    padding: .25em;
+    text-align: center;
+    cursor: pointer;
+
+}
+.date-filter-item:last-child{
+    border: none;
+}
 .bar {
     fill: #2980b9;
 }
@@ -51,22 +91,22 @@ g{
     text-align: left;
     text-overflow: wrap;
 }
-::-webkit-scrollbar { 
+/*::-webkit-scrollbar { 
     display: none; 
-}
+}*/
 
 div.svg-holder, svg{
     background-color: white;
     margin-bottom: 10px;
-    border-radius: 10px;
+    /*border-radius: 10px;*/
 }
 
 div.svg-holder svg{
     padding: 7px;
 }
 div.svg-holder, #left-panel{
-    border-radius: 10px;
-    box-shadow: 1px 1px 1px #bdbdbd;
+    /*border-radius: 10px;*/
+    /*box-shadow: 1px 1px 1px #bdbdbd;*/
     /*border: 1px solid #1abc9c;*/
 }
 
@@ -95,7 +135,7 @@ svg, #left-panel{
     padding: 10px;
 }
 #filter-holder{
-    height: 80vh;
+    /*height: 80vh;*/
     overflow: auto;
 }
 

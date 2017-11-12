@@ -1,5 +1,5 @@
 {
-  "name": "EFAS Dashboard",
+  "name": "efas-dashboard",
   "description": "Reports vehicle check-in data",
   "dependencies": {
     "body-parser": "*",

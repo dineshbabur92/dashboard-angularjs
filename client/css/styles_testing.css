@@ -1,4 +1,4 @@
-#container{
+/*#container{
 	height: 50vh;
 	width: 50vw;
 }
@@ -21,4 +21,15 @@
 #category-holder.axis-section-horizontal .item{
 	display: flex;
 	justify-content: space-between;
+}*/
+
+
+div{
+	border: 1px solid black;
+}
+
+.navbar{
+	width: 100%;
+	box-shadow: 0px 3px 2px lightgray;
+	height: 100px;
 }
