@@ -16,7 +16,7 @@ require("./models")(wagner);
 app.use(express.static(__dirname + '/client')) ;
 app.use("/", require("./api")(wagner));
 
-app.listen(3000);
-console.log("app listening in 3000!");
+app.listen(8080);
+console.log("app listening in 8080!");
 
 

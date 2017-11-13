@@ -141,6 +141,10 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "charts", functi
     $scope.getFilters();
     $scope.getReport();
 
+    // $scope.$watch("selectedFilters['Hours']", function(newValue, oldValue){
+    // 	console.log("Hours changed");
+    // });
+
      $( function() {
 	    $( "#slider-range" ).slider({
 	      range: true,
@@ -149,7 +153,8 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "charts", functi
 	      values: [ 0, 24 ],
 	      slide: function( event, ui ) {
 	        $( "#hour-range" ).val( ui.values[ 0 ] + " to " + ui.values[ 1 ] );
-	        $scope.selectedFilters["Hour"] = ui.values
+	        $scope.selectedFilters["Hour"] = ui.values;
+	        // $scope.getreport();
 	      }
 	    });
 	    $( "#hour-range" ).val( $( "#slider-range" ).slider( "values", 0 ) +

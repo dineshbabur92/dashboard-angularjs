@@ -7,10 +7,17 @@ body {
     font-family: "Arial", sans-serif;
     /*width: 98vw;*/
     background: #505050;
-    padding: 50px;
+    /*padding: 50px;*/
     overflow: auto;
 
 }
+
+#heading{
+    background-color: white;
+    text-align: center;
+    height: 2em;
+}
+
 
 .filter-items-box{
     overflow: auto;
@@ -63,6 +70,7 @@ body {
 .date-filter-item:last-child{
     border: none;
 }
+
 .bar {
     fill: #2980b9;
 }

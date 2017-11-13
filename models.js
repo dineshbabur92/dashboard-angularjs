@@ -4,9 +4,9 @@ var _ = require("underscore");
 module.exports = function(wagner){
 
 	var connection = mysql.createConnection({
-	  host     : 'localhost',
+	  host     : '172.16.7.73', //'localhost',
 	  user     : 'root',
-	  password : '',
+	  password : 'dinesh',
 	  database : 'bmw'
 	});
 	 

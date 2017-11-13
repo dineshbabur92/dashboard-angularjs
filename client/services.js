@@ -81,13 +81,13 @@ efasApp.service("charts", function(){
 
     	if(holder === "chart4"){
     		console.log("chart4 values length: " + values.length);
-    		$("#" + holder).css({"overflow": "auto", "height": values.length*25});
+    		$("#" + holder).css({"overflow-x": "hidden", "overflow-y": "auto", "height": values.length*25});
     	}
 
 		Highcharts.chart(holder, {
 		    chart: {
-		        type: 'bar',
-		        marginRight: holder === "chart4" ? undefined : 50
+		        type: 'bar'
+		        // marginRight: holder === "chart4" ? undefined : 50
 		    },
 		    title: {
 		        text: data.title
@@ -98,17 +98,22 @@ efasApp.service("charts", function(){
 		            text: null
 		        },
 		        labels: {
-
+		        	style: {
+		                width: holder === "chart4" ? (($("#"+holder).width() *.75) + "px") : undefined,
+		                'min-width': '100px',
+		                'text-overflow': 'hidden'
+		            },
+		            useHTML : true
 		        },
-		        scrollbar: {
-		            enabled: true
-		        },
-		        width: holder === "chart4" ? $("#"+holder).width() *.95 : undefined,
+		        // scrollbar: {
+		        //     enabled: true
+		        // },
+		        // width: holder === "chart4" ? (($("#"+holder).width() *.05) + "px") : undefined,
 		    },
 		    yAxis: {
 		        min: 0,
 		        tickInterval: holder === "chart4" ? 1 : undefined,
-		        width: holder === "chart4" ? $("#"+holder).width() *.05 : undefined,
+		        width: holder === "chart4" ? (($("#"+holder).width() *.05) + "px") : undefined,
 		        title: {
 		            text: data.value_field,
 		            align: 'high'
@@ -120,7 +125,7 @@ efasApp.service("charts", function(){
 		    tooltip: {
 		        valueSuffix: '',
 		        positioner: function(labelWidth, labelHeight, point) {
-			        var tooltipX = point.plotX + -100;
+			        var tooltipX = point.plotX; // + -50;
 			        var tooltipY = point.plotY;
 			        return {
 			            x: tooltipX,

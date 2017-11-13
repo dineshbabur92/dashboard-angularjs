@@ -33,6 +33,9 @@
 	</div>
 
 	<div class="col-md-10">
+		<!-- <div class="col-md-12 svg-holder">
+			<div>EFAS Dashboard</div>
+		</div> -->
 		<div id="timeline-filter" class="col-md-12 svg-holder">
 			<div id="date-filter">
 				<span class="date-filter-item" ng-click="dateOptionSelected(this, $event)" ng-repeat="(filter, value) in dateFilterOptions">
@@ -42,14 +45,14 @@
 
 			<div id="hour-filter">
 				<div>
-				Time Range:
+				Hours in Range -
 				<input type="text" id="hour-range" readonly style="border:0;"></div>
 				<div id="slider-range"></div>
 			</div>
 		</div>
 		<div id="summary" class="col-md-12 svg-holder">
 			<div id="vehicle-summary">No. of Vehicles(s): {{count_vehicles}}</div>
-			<div ng-model="$scope.count_checkins" id="checkin-summary">No. of Checkins: {{count_checkins}}</div>
+			<div ng-model="$scope.count_checkins" id="checkin-summary">No. of Checkin(s): {{count_checkins}}</div>
 		</div>
 		<div id="chart1" class="col-md-12 svg-holder">
 		</div>
