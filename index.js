@@ -14,6 +14,7 @@ wagner.factory("app", function(){
 require("./models")(wagner);
 
 app.use(express.static(__dirname + '/client')) ;
+app.use(express.static(__dirname + '/blur-admin')) ;
 app.use("/", require("./api")(wagner));
 
 app.listen(8080);

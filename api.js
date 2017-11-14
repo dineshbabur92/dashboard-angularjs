@@ -14,7 +14,7 @@ module.exports = function(wagner){
 	});
 
 	api.get("/testing", function(req, res){
-		res.sendFile(__dirname + "/client/testing.html");
+		res.sendFile(__dirname + "/blur-admin/src/index.html");
 		// res.json({message: "hello world!"});
 	});
 
