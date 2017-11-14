@@ -28,6 +28,7 @@
   "scripts": {
     "test": "mocha test.js",
     "watch": "gulp watch",
-    "nodemon": "nodemon index.js"
+    "nodemon": "nodemon index.js",
+    "start": "node index"
   }
 }
