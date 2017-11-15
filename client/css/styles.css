@@ -173,10 +173,10 @@ body {
 
 #date-filter{
     padding: 0em;
-    border: 1px solid lightgray;
+    border: 1px solid #3498db;
 }
 .date-filter-item{
-    border-right: 1px solid lightgray;
+    border-right: 1px solid #3498db;
     flex-grow: 1;
     padding: .25em;
     text-align: center;
