@@ -11,14 +11,34 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "charts", functi
     // $scope.isFilterChanged = false;
     $log.log("requesting /overview, filters: " + $scope.filters);
 
-    $scope.toggleSidePane = function(toggleButton){
-    	console.log(toggleButton.$parent);
-    	toggleButton.$parent.css({"background-color": "green"});
+    $scope.toggleLeftPanel = function(){
+    	console.log($("#left-panel").css("left"));
+    	if(parseInt($("#left-panel").css("left"))<0){
+    		$("#left-panel").css({"left": "0px"});
+    		$(".main-holder").css({"left": "242px"});
+    		$("#cover").css({"visibility": "visible"});
+    		$("#show-filters-button div").html("APPLY");
+    	}
+    	else{
+    		//$("#left-panel").css({"left": "-" + ((300 - $("#show-filters-button").width())  
+    		//	+ parseInt($("#show-filters-button").css("margin"))) + "px" });
+    		$("#left-panel").css({"left": "-242px" });
+    		$(".main-holder").css({"left": "0"});
+    		$("#show-filters-button div").html("FILTERS");
+    		$("#loader").css({"visibility": "visible"});
+    		setTimeout(function () {
+			  	$scope.getReport();
+			}, 1000);
+    		
+    	}
     }
+
+
 
     $scope.handleDateOption = function(filter){
     	if(filter === "Total"){
     		$scope.selectedFilters["Date"] = [];
+    		$scope.getReport();
     		return;
     	}
     	var days = $scope.dateFilterOptions[filter];
@@ -27,12 +47,14 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "charts", functi
     		+ (new Date($scope.today - (days * 24* 60 * 60 * 1000))).getDate(),
     		$scope.today.getFullYear() + "-" + ($scope.today.getMonth() + 1) + "-" + $scope.today.getDate(),
     		];
+
+    	$scope.getReport();
     }
 
     $scope.dateOptionSelected = function(elt, event){
     	$scope.handleDateOption(elt.filter);
     	$(event.currentTarget).siblings().css({"background-color": "white", "color": "black"});
-    	$(event.currentTarget).css({"background-color": "#67b7dc", "color": "white"});
+    	$(event.currentTarget).css({"background-color": "#3498db", "color": "white"});
     }
 
     
@@ -64,6 +86,9 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "charts", functi
     }
 
     $scope.getReport = function(){
+
+  		$("#cover").css({"visibility": "visible"});
+		$("#loader").css({"visibility": "visible"});
     	 $http({
 			method: 'POST',
 			url: '/report',
@@ -106,7 +131,8 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "charts", functi
 	            value_field: response.data.value_fields.chart4,
 	            draw_height: .9
 	    	}, "chart4");
-
+	    	$("#cover").css({"visibility": "hidden"});
+			$("#loader").css({"visibility": "hidden"});
 		}, function(error) {
 			$log.log("error: " + error);
 		});
@@ -154,7 +180,9 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "charts", functi
 	      slide: function( event, ui ) {
 	        $( "#hour-range" ).val( ui.values[ 0 ] + " to " + ui.values[ 1 ] );
 	        $scope.selectedFilters["Hour"] = ui.values;
-	        // $scope.getreport();
+	        setTimeout(function(){
+	        	$scope.getReport();
+	        },750);
 	      }
 	    });
 	    $( "#hour-range" ).val( $( "#slider-range" ).slider( "values", 0 ) +

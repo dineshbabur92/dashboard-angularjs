@@ -10,14 +10,13 @@
         <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"> -->
 
         <link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="css/styles.css"/>
-        <link rel="stylesheet" href="css/styles_testing.css"/>
-        <link rel="stylesheet" href="css/google_scrollbar.css"/>
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         
-        <style>
-            
-        </style>
+        <link rel="stylesheet" href="css/styles_testing.css"/>
+        <!-- <link rel="stylesheet" href="css/semantic.css"/> -->
+        <link rel="stylesheet" href="css/styles.css"/>
+        <!-- <link rel="stylesheet" href="css/google_scrollbar.css"/> -->
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/components/sidebar.css"/> -->
         
         <!-- load angular via CDN -->
 
@@ -25,24 +24,27 @@
             src="https://code.jquery.com/jquery-3.2.1.min.js"
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
             crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script src="js/transitions.js"></script>
+        <!-- <script src="js/semantic.js"></script> -->
         <script src="https://code.highcharts.com/highcharts.js"></script>
         <script src="https://code.highcharts.com/modules/exporting.js"></script>
+        <!-- <script src="highchart_theme.js"></script> -->
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/components/sidebar.js"></script> -->
         <!-- <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script> -->
 
-        <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
-        <script
+        <!-- <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css"> -->
+        <!-- <script
           src="https://code.jquery.com/jquery-3.1.1.min.js"
           integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-          crossorigin="anonymous"></script>
-        <script src="semantic/dist/semantic.min.js"></script>
+          crossorigin="anonymous"></script> -->
+        <!-- <script src="semantic/dist/semantic.min.js"></script> -->
 
-        <script type="text/javascript" src="https://www.amcharts.com/lib/3/amcharts.js"></script>
-        <script type="text/javascript" src="https://www.amcharts.com/lib/3/serial.js"></script>
-        <script type="text/javascript" src="https://www.amcharts.com/lib/3/pie.js"></script>
-        <script type="text/javascript" src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+        <!-- <script type="text/javascript" src="https://www.amcharts.com/lib/3/amcharts.js"></script> -->
+        <!-- <script type="text/javascript" src="https://www.amcharts.com/lib/3/serial.js"></script> -->
+        <!-- <script type="text/javascript" src="https://www.amcharts.com/lib/3/pie.js"></script> -->
+        <!-- <script type="text/javascript" src="https://www.amcharts.com/lib/3/themes/light.js"></script> -->
 
         <script src="//code.angularjs.org/1.3.0-rc.2/angular.min.js"></script>
         <script src="//code.angularjs.org/1.3.0-rc.2/angular-route.min.js"></script>
@@ -58,26 +60,32 @@
     </head>
     <body>
 
-        <header>
+        <!-- <header>
 			<nav style="border-radius: 0px;" class="navbar navbar-default">
     			<div class="container">
     				<div class="navbar-header">
+                        <button onclick="$('.ui.sidebar').sidebar('toggle')">menu</button>
+                        <span class="icon-bars-button">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                          </span>
     					<a class="navbar-brand" href="/">EFAS Dashboard</a>
     				</div>
     			</div>
 			</nav>
-		</header>
-        <div class="ui sidebar inverted vertical menu">
-    <a class="item">
-      1
-    </a>
-    <a class="item">
-      2
-    </a>
-    <a class="item">
-      3
-    </a>
-  </div>
+		</header> -->
+
+    <body>
+        <div id="cover" style="visibility: hidden">
+          <div id="loader" style="visibility: hidden;"></div>
+        </div>
+        <div class="main-holder">
+            <div class="container">
+              <div ng-view></div>
+            </div>
+        </div>
+        
         <!--- <nav class="navbar navbar-default">
         <div class="container-fluid">
           <div class="navbar-header">
@@ -116,13 +124,11 @@
         </div>
       </nav>
 
-        <!-- <div class="container">
+        <div class="container">
             <div id="heading" class="row">EFAS Dashboard</div>
         </div> -->
 
-        <div class="container">
-            <div ng-view></div>
-		</div>
+        
 
     </body>
 </html>

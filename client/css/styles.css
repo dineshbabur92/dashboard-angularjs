@@ -6,12 +6,132 @@ html, body, input, select, textarea
 body {
     font-family: "Arial", sans-serif;
     /*width: 98vw;*/
-    background: #505050;
+    background: #F0F0F0;
     /*padding : 50px;*/
     overflow: auto;
 
 }
+#loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+  z-index: 400;
+}
 
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+#cover{
+    width: 100%;
+    height: 100vh;
+    overflow-y: hidden;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.7);
+    /*opacity: .5;*/
+    background-size: cover;
+    background-image: "images/loading.gif";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.main-holder{
+    position: absolute;
+    left: 0px;
+    width: 100%;
+    transition: .5s;
+}
+
+#left-panel{
+    /*border-right: 1px solid lightgray;*/
+    background-color: white;
+    padding: .25em;
+    position: fixed;
+    left: -242px;
+    top: 0;
+    z-index: 200;
+    width: 300px;
+    transition: .5s;
+    overflow: auto;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+}
+
+#filters-holder{
+    overflow: auto;
+    padding: .5em;
+}
+
+#filters-container{
+    overflow: auto;
+    flex-grow: 1;
+    padding: .25em;
+}
+#show-filters-button{
+    width: 50px;
+    background-color: #3498db;
+    border: 1px solid #3498db;
+    /*border-radius: .25em;*/
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: .25em;
+    font-size: 1.25em;
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+}
+
+.card:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
+}
+
+/*#show-filters-button:hover{
+    background-color: rgb(22, 160, 133);
+    color: white;
+    transition: .1s;
+}*/
+#show-filters-button > div{
+    transform: rotate(-90deg);
+
+}
+
+.container{
+    padding-top: .25em;
+}
+
+.filter-items-box{
+    overflow: auto;
+    max-height: 100px;
+}
+
+
+/*@keyframes slide {
+    100% { left: 0; }
+}*/
+
+/*.pusher, .pushable{
+    background-color: #505050;
+}*/
 #heading{
     background-color: white;
     text-align: center;
@@ -19,10 +139,6 @@ body {
 }
 
 
-.filter-items-box{
-    overflow: auto;
-    max-height: 100px;
-}
 
 /*div[class*="col-md-"]{
     background-color: white;
@@ -71,6 +187,10 @@ body {
     border: none;
 }
 
+#Total-date-filter-item{
+    background-color: #3498db;
+    color: white;
+}
 .bar {
     fill: #2980b9;
 }
@@ -137,15 +257,8 @@ svg, #left-panel{
 .amChartsLegend {
     overflow: auto;
 }
-#left-panel{
-    /*border-right: 1px solid lightgray;*/
-    background-color: white;
-    padding: 10px;
-}
-#filter-holder{
-    /*height: 80vh;*/
-    overflow: auto;
-}
+
+
 
 .filter-name{
     font-size: 1em;
@@ -159,7 +272,7 @@ hr{
     margin: 0px;
 }
 
-#left-sidepane{
+/*#left-sidepane{
     z-index: 1;
     position: fixed;
     height: 100vh;
@@ -176,7 +289,7 @@ hr{
     display: flex;
     height: 3em;
     flex-grow: 1;
-}
+}*/
 
 #title-area, #toggle-button{
     height: 100%;
@@ -194,15 +307,14 @@ hr{
 }
 
 /* The starting CSS styles for the enter animation */
-.repeated-item.ng-enter {
+/*.repeated-item.ng-enter {
   /*transition: 0.5s linear all;
-  opacity:0;*/
-}
+  opacity:0;
 
-/* The finishing CSS styles for the enter animation */
+ The finishing CSS styles for the enter animation 
 .repeated-item.ng-enter-active {
   background-color: green;
-}
+}*/
 
 
 /*#sidepane-button{

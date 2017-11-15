@@ -11,63 +11,92 @@
 		</div>
 		
 	</div> -->
-	
-<div class="row">
-	<div id="left-panel" class="col-md-2">
-		<button type="button" class="btn btn-primary" id="apply-filters-button" 
-			ng-click="getReport()">
-			APPLY <i class="fa fa-play" aria-hidden="true"></i>
-		</button>
-		<div id="filter-holder">
-			<div ng-repeat="(filter_name, filter_items) in filters">
-				<div class="filter-name">{{ filter_name }}</div>
-				<hr/>
-				<div class="list-group filter-items-box checked-list-box filter-items">
-					<div class="" ng-repeat="item in filter_items">
-						<input type="checkbox" for-item="{{item}}" 
-							ng-click="filterChanged(this, $event)"/>
-						<span class="filter-item-name">{{item}}</span>
+<!-- <div class="ui sidebar inverted vertical menu">
+    <div id="filter-holder">
+				<div ng-repeat="(filter_name, filter_items) in filters">
+					<div class="filter-name">{{ filter_name }}</div>
+					<hr/>
+					<div class="list-group filter-items-box checked-list-box filter-items">
+						<div class="" ng-repeat="item in filter_items">
+							<input type="checkbox" for-item="{{item}}" 
+								ng-click="filterChanged(this, $event)"/>
+							<span class="filter-item-name">{{item}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+</div>
+<div class="pusher">
+    <button onclick="$('.ui.sidebar').sidebar('toggle')">menu</button> -->
+
+    <div id="left-panel" class="col-md-2">
+    	
+    	<div id="filters-container">
+			<!-- <button type="button" class="btn btn-primary" id="apply-filters-button" 
+				ng-click="getReport()">
+				APPLY <i class="fa fa-play" aria-hidden="true"></i>
+			</button> -->
+			<div id="filters-holder">
+				<div ng-repeat="(filter_name, filter_items) in filters">
+					<div class="filter-name">{{ filter_name }}</div>
+					<hr/>
+					<div class="list-group filter-items-box checked-list-box filter-items">
+						<div class="" ng-repeat="item in filter_items">
+							<input type="checkbox" for-item="{{item}}" 
+								ng-click="filterChanged(this, $event)"/>
+							<span class="filter-item-name">{{item}}</span>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+
+		<div id="show-filters-button" ng-click="toggleLeftPanel()">
+			<div>FILTERS</div>
+		</div>
+
 	</div>
 
-	<div class="col-md-10">
-		<!-- <div class="col-md-12 svg-holder">
-			<div>EFAS Dashboard</div>
-		</div> -->
-		<div id="timeline-filter" class="col-md-12 svg-holder">
-			<div id="date-filter">
-				<span class="date-filter-item" ng-click="dateOptionSelected(this, $event)" ng-repeat="(filter, value) in dateFilterOptions">
-					{{filter}}
-				</span>
-			</div>
+	<!-- <button style="width: 100%" ng-click="toggleLeftPanel()">toggle</button> -->
+	<div class="row">
+		
 
-			<div id="hour-filter">
-				<div>
-				Hours in Range -
-				<input type="text" id="hour-range" readonly style="border:0;"></div>
-				<div id="slider-range"></div>
+		<div class="col-md-12">
+			<!-- <div class="col-md-12 svg-holder">
+				<div>EFAS Dashboard</div>
+			</div> -->
+			<div id="timeline-filter" class="col-md-12 svg-holder card">
+				<div id="date-filter">
+					<span id="{{filter}}-date-filter-item" class="date-filter-item" ng-click="dateOptionSelected(this, $event)" ng-repeat="(filter, value) in dateFilterOptions">
+						{{filter}}
+					</span>
+				</div>
+
+				<div id="hour-filter">
+					<div>
+					Hours in Range -
+					<input type="text" id="hour-range" readonly style="border:0;"></div>
+					<div id="slider-range"></div>
+				</div>
 			</div>
-		</div>
-		<div id="summary" class="col-md-12 svg-holder">
-			<div id="vehicle-summary">No. of Vehicles(s): {{count_vehicles}}</div>
-			<div ng-model="$scope.count_checkins" id="checkin-summary">No. of Checkin(s): {{count_checkins}}</div>
-		</div>
-		<div id="chart1" class="col-md-12 svg-holder">
-		</div>
-		<div class="col-md-6" style="padding-left:0">
-			<div id="chart2" class="svg-holder">
+			<div id="summary" class="col-md-12 svg-holder card">
+				<div id="vehicle-summary">No. of Vehicles(s): {{count_vehicles}}</div>
+				<div ng-model="$scope.count_checkins" id="checkin-summary">No. of Checkin(s): {{count_checkins}}</div>
 			</div>
-		</div>
-		<div class="col-md-6" style="padding-right:0">
-			<div id="chart3" class="svg-holder">
+			<div id="chart1" class="col-md-12 svg-holder card">
 			</div>
-		</div>
-		<!-- <div id="chart4-tabs" class="col-md-4">
-		</div> -->
-		<div id="chart4" class="col-md-12 svg-holder">
+			<div class="col-md-6" style="padding-left:0">
+				<div id="chart2" class="svg-holder card">
+				</div>
+			</div>
+			<div class="col-md-6" style="padding-right:0">
+				<div id="chart3" class="svg-holder card">
+				</div>
+			</div>
+			<!-- <div id="chart4-tabs" class="col-md-4">
+			</div> -->
+			<div id="chart4" class="col-md-12 svg-holder card">
+			</div>
 		</div>
 	</div>
-</div>
+<!-- </div> -->
