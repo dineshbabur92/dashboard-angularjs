@@ -4,11 +4,11 @@ var _ = require("underscore");
 module.exports = function(wagner){
 
 	var connection;
-
+	console.log(process.env.MARIADB_IP);
 	function handleDisconnect() {
 
 		connection = mysql.createConnection({
-		  host     : '172.16.7.73', //'localhost',
+		  host     : process.env.MARIADB_IP, //'localhost',
 		  user     : 'root',
 		  password : 'dinesh',
 		  database : 'bmw'
