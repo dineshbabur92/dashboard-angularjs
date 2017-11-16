@@ -15,14 +15,14 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "charts", functi
     	console.log($("#left-panel").css("left"));
     	if(parseInt($("#left-panel").css("left"))<0){
     		$("#left-panel").css({"left": "0px"});
-    		$(".main-holder").css({"left": "242px"});
+    		$(".main-holder").css({"left": ($("#filters-container").width() + 3) + "px"});
     		$("#cover").css({"visibility": "visible"});
     		$("#show-filters-button div").html("APPLY");
     	}
     	else{
     		//$("#left-panel").css({"left": "-" + ((300 - $("#show-filters-button").width())  
     		//	+ parseInt($("#show-filters-button").css("margin"))) + "px" });
-    		$("#left-panel").css({"left": "-242px" });
+    		$("#left-panel").css({"left": "-" + ($("#filters-container").width() + 3) + "px" });
     		$(".main-holder").css({"left": "0"});
     		$("#show-filters-button div").html("FILTERS");
     		$("#loader").css({"visibility": "visible"});
@@ -33,12 +33,32 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "charts", functi
     	}
     }
 
-
+    $scope.toggleTopPanel = function(){
+    	console.log($("#top-panel").css("top"));
+    	if(parseInt($("#top-panel").css("top"))<0){
+    		$("#top-panel").css({"top": "0px"});
+    		$(".main-holder").css({"top": ($("#timeline-filter-container").height()) + "px"});
+    		$("#cover").css({"visibility": "visible"});
+    		$("#show-timeline-filter-button div").html("APPLY");
+    	}
+    	else{
+    		//$("#left-panel").css({"left": "-" + ((300 - $("#show-filters-button").width())  
+    		//	+ parseInt($("#show-filters-button").css("margin"))) + "px" });
+    		$("#top-panel").css({"top": "-" + ($("#timeline-filter-container").height()) + "px" });
+    		$(".main-holder").css({"top": "0"});
+    		$("#show-timeline-filter-button div").html("Choose Date and Time");
+    		$("#loader").css({"visibility": "visible"});
+    		setTimeout(function () {
+			  	$scope.getReport();
+			}, 1000);
+    		
+    	}
+    }
 
     $scope.handleDateOption = function(filter){
     	if(filter === "Total"){
     		$scope.selectedFilters["Date"] = [];
-    		$scope.getReport();
+    		// $scope.getReport();
     		return;
     	}
     	var days = $scope.dateFilterOptions[filter];
@@ -48,13 +68,13 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "charts", functi
     		$scope.today.getFullYear() + "-" + ($scope.today.getMonth() + 1) + "-" + $scope.today.getDate(),
     		];
 
-    	$scope.getReport();
+    	// $scope.getReport();
     }
 
     $scope.dateOptionSelected = function(elt, event){
     	$scope.handleDateOption(elt.filter);
-    	$(event.currentTarget).siblings().css({"background-color": "white", "color": "black"});
-    	$(event.currentTarget).css({"background-color": "#3498db", "color": "white"});
+    	$(event.currentTarget).siblings().css({"background-color": "white", "color": "#3498db", "border-bottom": "none"});
+    	$(event.currentTarget).css({"color": "#C2185B", "border-bottom": "3px solid #C2185B"});
     }
 
     
@@ -164,8 +184,7 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "charts", functi
 		});
     }
 
-    $scope.getFilters();
-    $scope.getReport();
+    
 
     // $scope.$watch("selectedFilters['Hours']", function(newValue, oldValue){
     // 	console.log("Hours changed");
@@ -180,13 +199,32 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "charts", functi
 	      slide: function( event, ui ) {
 	        $( "#hour-range" ).val( ui.values[ 0 ] + " to " + ui.values[ 1 ] );
 	        $scope.selectedFilters["Hour"] = ui.values;
-	        setTimeout(function(){
-	        	$scope.getReport();
-	        },750);
+	        // setTimeout(function(){
+	        // 	$scope.getReport();
+	        // },750);
 	      }
 	    });
 	    $( "#hour-range" ).val( $( "#slider-range" ).slider( "values", 0 ) +
 	      " to " + $( "#slider-range" ).slider( "values", 1 ) );
 	  } );
+
+
+     $scope.setupLayout = function(){
+     	$("#top-panel").css({"top": "-" + ( $("#timeline-filter-container").height() + 20) + "px" });
+     	$("#left-panel").css({"left": "-" + ($("#filters-container").width() + 10) + "px" });
+     	setTimeout(function(){
+		    $("#cover").css({"visibility": "hidden", "z-index": "50" });
+		 	$("#loader").css({"visibility": "hidden", "z-index": "50" });
+	 	}, 1000);
+     	
+     }
+
+     $scope.setupLayout();
+     
+     // setTimeout(function(){
+     	$scope.getFilters();
+		$scope.getReport();
+     // }, 10000);
+	
 
 }]);

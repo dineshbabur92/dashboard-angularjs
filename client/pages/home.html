@@ -65,23 +65,37 @@
 			<!-- <div class="col-md-12 svg-holder">
 				<div>EFAS Dashboard</div>
 			</div> -->
-			<div id="timeline-filter" class="col-md-12 svg-holder card">
-				<div id="date-filter">
-					<span id="{{filter}}-date-filter-item" class="date-filter-item" ng-click="dateOptionSelected(this, $event)" ng-repeat="(filter, value) in dateFilterOptions">
-						{{filter}}
-					</span>
-				</div>
+			<div id="top-panel">
+				<div id="timeline-filter-container">
+					<div id="timeline-filter" class="col-md-12 svg-holder">
+						<div id="date-filter">
+							<span id="{{filter}}-date-filter-item" class="date-filter-item" ng-click="dateOptionSelected(this, $event)" ng-repeat="(filter, value) in dateFilterOptions">
+								{{filter}}
+							</span>
+						</div>
 
-				<div id="hour-filter">
-					<div>
-					Hours in Range -
-					<input type="text" id="hour-range" readonly style="border:0;"></div>
-					<div id="slider-range"></div>
+						<div id="hour-filter">
+							<div>
+							Hours in Range -
+							<input type="text" id="hour-range" readonly style="border:0;"></div>
+							<div id="slider-range"></div>
+						</div>
+					</div>
+				</div>
+				<div id="show-timeline-filter-button" ng-click="toggleTopPanel()">
+					<div>Choose Date and Time</div>
 				</div>
 			</div>
+
 			<div id="summary" class="col-md-12 svg-holder card">
-				<div id="vehicle-summary">No. of Vehicles(s): {{count_vehicles}}</div>
-				<div ng-model="$scope.count_checkins" id="checkin-summary">No. of Checkin(s): {{count_checkins}}</div>
+				<div id="vehicle-summary">
+					<div class="summary-title">Vehicles(s)</div>
+					<div class="summary-number">{{count_vehicles}}</div>
+				</div>
+				<div ng-model="$scope.count_checkins" id="checkin-summary">
+					<div class="summary-title">Check-in(s)</div>
+					<div class="summary-number">{{count_checkins}}</div>
+				</div>
 			</div>
 			<div id="chart1" class="col-md-12 svg-holder card">
 			</div>

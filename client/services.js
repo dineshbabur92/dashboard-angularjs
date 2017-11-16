@@ -125,7 +125,7 @@ efasApp.service("charts", function(){
 		    tooltip: {
 		        valueSuffix: '',
 		        positioner: function(labelWidth, labelHeight, point) {
-			        var tooltipX = point.plotX; // + -50;
+			        var tooltipX = holder === "chart4" ? point.plotX + 400 : point.plotX;
 			        var tooltipY = point.plotY;
 			        return {
 			            x: tooltipX,
