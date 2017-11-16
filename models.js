@@ -18,19 +18,21 @@ module.exports = function(wagner){
 	                                          
 		connection.on('error', function(err) {
 			console.log('db error', err);
-			if(err.code === 'PROTOCOL_CONNECTION_LOST') { // Connection to the MySQL server is usually
-			  handleDisconnect();                         // lost due to either server restart, or a
-			} else {                                      // connnection idle timeout (the wait_timeout
-			  throw err;                                  // server variable configures this)
-			}
+			// if(err.code === 'PROTOCOL_CONNECTION_LOST') { // Connection to the MySQL server is usually
+		  	handleDisconnect();                         // lost due to either server restart, or a
+			// } else {                                      // connnection idle timeout (the wait_timeout
+			//   throw err;                                  // server variable configures this)
+			// }
+		});
+
+		wagner.factory("db", function(){	
+			return connection;
 		});
 	}
 
 	handleDisconnect();
 	 
-	wagner.factory("db", function(){	
-		return connection;
-	});
+	
 	 
 	// connection.end();
 }
