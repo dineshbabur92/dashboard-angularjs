@@ -51,7 +51,7 @@
 			</div>
 		</div>
 
-		<div id="show-filters-button" ng-click="toggleLeftPanel()">
+		<div id="show-filters-button" class="" ng-click="toggleLeftPanel()">
 			<div>FILTERS</div>
 		</div>
 
@@ -75,7 +75,7 @@
 				<div id="hour-filter">
 					<div>
 					Hours in Range -
-					<input type="text" id="hour-range" readonly style="border:0;"></div>
+					<input type="text" id="hour-range" readonly style="border:0;background-color: rgba(0,0,0,0)"></div>
 					<div id="slider-range"></div>
 				</div>
 			</div>
@@ -83,19 +83,19 @@
 				<div id="vehicle-summary">No. of Vehicles(s): {{count_vehicles}}</div>
 				<div ng-model="$scope.count_checkins" id="checkin-summary">No. of Checkin(s): {{count_checkins}}</div>
 			</div>
-			<div id="chart1" class="col-md-12 svg-holder card">
+			<div id="chart1" class="col-md-12 svg-holder">
 			</div>
 			<div class="col-md-6" style="padding-left:0">
-				<div id="chart2" class="svg-holder card">
+				<div id="chart2" class="svg-holder">
 				</div>
 			</div>
 			<div class="col-md-6" style="padding-right:0">
-				<div id="chart3" class="svg-holder card">
+				<div id="chart3" class="svg-holder">
 				</div>
 			</div>
 			<!-- <div id="chart4-tabs" class="col-md-4">
 			</div> -->
-			<div id="chart4" class="col-md-12 svg-holder card">
+			<div id="chart4" class="col-md-12 svg-holder">
 			</div>
 		</div>
 	</div>
