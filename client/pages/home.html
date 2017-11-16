@@ -29,13 +29,9 @@
 <div class="pusher">
     <button onclick="$('.ui.sidebar').sidebar('toggle')">menu</button> -->
 
-    <div id="left-panel" class="col-md-2">
+    <!-- <div id="left-panel" class="col-md-2">
     	
     	<div id="filters-container">
-			<!-- <button type="button" class="btn btn-primary" id="apply-filters-button" 
-				ng-click="getReport()">
-				APPLY <i class="fa fa-play" aria-hidden="true"></i>
-			</button> -->
 			<div id="filters-holder">
 				<div ng-repeat="(filter_name, filter_items) in filters">
 					<div class="filter-name">{{ filter_name }}</div>
@@ -51,11 +47,11 @@
 			</div>
 		</div>
 
-		<div id="show-filters-button" ng-click="toggleLeftPanel()">
+		 <div id="show-filters-button" ng-click="toggleLeftPanel()">
 			<div>FILTERS</div>
-		</div>
+		</div> 
 
-	</div>
+	</div> -->
 
 	<!-- <button style="width: 100%" ng-click="toggleLeftPanel()">toggle</button> -->
 	<div class="row">
@@ -66,6 +62,7 @@
 				<div>EFAS Dashboard</div>
 			</div> -->
 			<div id="top-panel">
+				<div id="app-title">EFAS Dashboard</div>
 				<div id="timeline-filter-container">
 					<div id="timeline-filter" class="col-md-12 svg-holder">
 						<div id="date-filter">
@@ -76,40 +73,70 @@
 
 						<div id="hour-filter">
 							<div>
-							Hours in Range -
+							Hours: &nbsp; &nbsp;
 							<input type="text" id="hour-range" readonly style="border:0;"></div>
 							<div id="slider-range"></div>
 						</div>
 					</div>
 				</div>
-				<div id="show-timeline-filter-button" ng-click="toggleTopPanel()">
+				<!-- <div id="show-timeline-filter-button" ng-click="toggleTopPanel()">
 					<div>Choose Date and Time</div>
-				</div>
+				</div> -->
+			</div>
+			 <div id="left-panel" class="col-md-2 card">
+    			
+		    	<div id="filters-container">
+					
+					<div id="filters-holder">
+						<div ng-repeat="(filter_name, filter_items) in filters">
+							<div class="filter-name">{{ filter_name }}</div>
+							<hr/>
+							<div class="list-group filter-items-box checked-list-box filter-items">
+								<div class="" ng-repeat="item in filter_items">
+									<input type="checkbox" for-item="{{item}}" 
+										ng-click="filterChanged(this, $event)"/>
+									<span class="filter-item-name">{{item}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<button type="button" class="btn btn-primary" id="apply-filters-button" 
+						ng-click="getReport()">
+						APPLY <i class="fa fa-play" aria-hidden="true"></i>
+					</button>
 			</div>
 
-			<div id="summary" class="col-md-12 svg-holder card">
-				<div id="vehicle-summary">
-					<div class="summary-title">Vehicles(s)</div>
-					<div class="summary-number">{{count_vehicles}}</div>
-				</div>
-				<div ng-model="$scope.count_checkins" id="checkin-summary">
-					<div class="summary-title">Check-in(s)</div>
-					<div class="summary-number">{{count_checkins}}</div>
-				</div>
+				<!-- <div id="show-filters-button" ng-click="toggleLeftPanel()">
+					<div>FILTERS</div>
+				</div> -->
+
 			</div>
-			<div id="chart1" class="col-md-12 svg-holder card">
-			</div>
-			<div class="col-md-6" style="padding-left:0">
-				<div id="chart2" class="svg-holder card">
+			<div class="col-md-10">
+				<div id="summary" class="col-md-12 svg-holder card">
+					<div id="vehicle-summary">
+						<div class="summary-title">Vehicles(s)</div>
+						<div class="summary-number">{{count_vehicles}}</div>
+					</div>
+					<div ng-model="$scope.count_checkins" id="checkin-summary">
+						<div class="summary-title">Check-in(s)</div>
+						<div class="summary-number">{{count_checkins}}</div>
+					</div>
 				</div>
-			</div>
-			<div class="col-md-6" style="padding-right:0">
-				<div id="chart3" class="svg-holder card">
+				<div id="chart1" class="col-md-12 svg-holder card">
 				</div>
-			</div>
-			<!-- <div id="chart4-tabs" class="col-md-4">
-			</div> -->
-			<div id="chart4" class="col-md-12 svg-holder card">
+				<div class="col-md-6" style="padding-left:0">
+					<div id="chart2" class="svg-holder card">
+					</div>
+				</div>
+				<div class="col-md-6" style="padding-right:0">
+					<div id="chart3" class="svg-holder card">
+					</div>
+				</div>
+				<!-- <div id="chart4-tabs" class="col-md-4">
+				</div> -->
+				<div id="chart4" class="col-md-12 svg-holder card">
+				</div>
 			</div>
 		</div>
 	</div>

@@ -132,6 +132,10 @@ efasApp.service("charts", function(){
 			            y: tooltipY
 			        };
 			    },
+			    // useHTML: true,
+			    // "style":{
+			    // 	"padding": "0"
+			    // },
 			    borderWidth: 0,
 			    backgroundColor: "rgba(255,255,255,1)",
 			    borderRadius: 0,

@@ -13,6 +13,10 @@ body {
     /*font-weight: bold;*/
 
 }
+#app-title{
+    color: #3498db;
+    font-weight: bold;
+}
 #loader {
   border: 16px solid #f3f3f3;
   border-radius: 50%;
@@ -64,32 +68,35 @@ body {
     /*border-right: 1px solid lightgray;*/
     background-color: rgba(0,0,0,0);
     padding: 0em;
-    position: fixed;
-    left: -242px;
-    top: 0;
-    z-index: 200;
-    width: 300px;
+    /*position: fixed;
+    left: 0px;
+    top: 0;*/
+    /*z-index: 200;*/
+    /*width: 300px;*/
     transition: .5s;
     overflow: auto;
     height: 100vh;
     display: flex;
     flex-direction: row;
-    z-index: 400;
+    /*z-index: 400;*/
+    height: 85vh;
 }
 
 #top-panel{
-    background-color: rgba(0,0,0,0);
-    padding: 0em;
+    /*background-color: rgba(0,0,0,0);*/
+    background-color: white;
+    padding: 0em 1em;
     position: fixed;
     left: 0;
     top: 0;
     width: 100vw;
     transition: .5s;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
     z-index: 300;
+    box-shadow: 0px 2px 4px rgba(0,0,0,.3);
 }
 
 #filters-holder{
@@ -102,7 +109,8 @@ body {
     flex-grow: 1;
     padding: .25em;
     background-color: white;
-    z-index: 400;
+    /*z-index: 400;*/
+    width: 80%;
 }
 /*
 #timeline-filter-container{
@@ -146,6 +154,7 @@ body {
     box-shadow: 0 1px 2px rgba(0,0,0,.3);
     border-radius: .1em;
     transition: 0.3s; 
+    /*resize: both;*/
 }
 
 .card:hover {
@@ -203,7 +212,7 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    padding: .5em;
+    padding: 0em .5em;
     margin: 0;
 }
 #summary{
@@ -213,7 +222,7 @@ body {
 #timeline-filter > div, #summary > div {
     flex-grow: 1;
     order: 1;
-    padding: .5em;
+    padding: .1em;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -239,10 +248,22 @@ body {
 #hour-filter{
     /*flex-direction: column;*/
     /*color: #3498db;*/
+    width: 200px;
+}
+#hour-filter input{
+    /*flex-direction: column;*/
+    /*color: #3498db;*/
+    font-size: .75em;
+    height: 15px;
+    width: 100px;
 }
 #hour-filter div{
+    font-size: .75em;
     width: 100%;
     color: #3498db;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #hour-range{
@@ -257,10 +278,11 @@ body {
     /*border-right: 1px solid #3498db;*/
     color: #3498db;
     flex-grow: 1;
-    padding: .25em;
+    padding: .1em;
     text-align: center;
+    font-size: .74em;
     cursor: pointer;
-    margin: .25em;
+    margin: .1em;
 
 }
 .date-filter-item:last-child{
@@ -408,8 +430,8 @@ hr{
 #apply-filters-button{
     width: 100%;
     margin-bottom: 1em;
-    background-color: #67b7dc;
-    border-color: #67b7dc;
+    background-color: #3498db;
+    border-color: #3498db;
 }
 
 .label {

@@ -58,7 +58,7 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "charts", functi
     $scope.handleDateOption = function(filter){
     	if(filter === "Total"){
     		$scope.selectedFilters["Date"] = [];
-    		// $scope.getReport();
+    		$scope.getReport();
     		return;
     	}
     	var days = $scope.dateFilterOptions[filter];
@@ -68,7 +68,7 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "charts", functi
     		$scope.today.getFullYear() + "-" + ($scope.today.getMonth() + 1) + "-" + $scope.today.getDate(),
     		];
 
-    	// $scope.getReport();
+    	$scope.getReport();
     }
 
     $scope.dateOptionSelected = function(elt, event){
@@ -199,9 +199,9 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "charts", functi
 	      slide: function( event, ui ) {
 	        $( "#hour-range" ).val( ui.values[ 0 ] + " to " + ui.values[ 1 ] );
 	        $scope.selectedFilters["Hour"] = ui.values;
-	        // setTimeout(function(){
-	        // 	$scope.getReport();
-	        // },750);
+	        setTimeout(function(){
+	        	$scope.getReport();
+	        },750);
 	      }
 	    });
 	    $( "#hour-range" ).val( $( "#slider-range" ).slider( "values", 0 ) +
@@ -209,17 +209,17 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "charts", functi
 	  } );
 
 
-     $scope.setupLayout = function(){
-     	$("#top-panel").css({"top": "-" + ( $("#timeline-filter-container").height() + 20) + "px" });
-     	$("#left-panel").css({"left": "-" + ($("#filters-container").width() + 10) + "px" });
-     	setTimeout(function(){
-		    $("#cover").css({"visibility": "hidden", "z-index": "50" });
-		 	$("#loader").css({"visibility": "hidden", "z-index": "50" });
-	 	}, 1000);
+   //   $scope.setupLayout = function(){
+   //   	$("#top-panel").css({"top": "-" + ( $("#timeline-filter-container").height() + 20) + "px" });
+   //   	$("#left-panel").css({"left": "-" + ($("#filters-container").width() + 10) + "px" });
+   //   	setTimeout(function(){
+		 //    $("#cover").css({"visibility": "hidden", "z-index": "50" });
+		 // 	$("#loader").css({"visibility": "hidden", "z-index": "50" });
+	 	// }, 1000);
      	
-     }
+   //   }
 
-     $scope.setupLayout();
+     // $scope.setupLayout();
      
      // setTimeout(function(){
      	$scope.getFilters();
