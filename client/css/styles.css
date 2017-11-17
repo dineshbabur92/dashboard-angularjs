@@ -75,11 +75,11 @@ body {
     /*width: 300px;*/
     transition: .5s;
     overflow: auto;
-    height: 100vh;
+    /*height: 100vh;*/
     display: flex;
     flex-direction: row;
     /*z-index: 400;*/
-    height: 85vh;
+    /*height: 85vh;*/
 }
 
 #top-panel{
@@ -101,13 +101,14 @@ body {
 
 #filters-holder{
     overflow: auto;
-    padding: .5em;
+    margin: .25em;
+    /*padding: .5em;*/
 }
 
 #filters-container{
     overflow: auto;
     flex-grow: 1;
-    padding: .25em;
+    /*padding: .25em;*/
     background-color: white;
     /*z-index: 400;*/
     width: 80%;
@@ -150,6 +151,32 @@ body {
     cursor: hand;
 }
 
+
+
+.filter-name{
+    background-color: #3498db;
+    padding: .25em;
+    color: white;
+}
+
+
+#filter-title, #apply-filters-button{
+    width: 99.5%;
+    /*margin-left: 1%;*/
+    /*margin-bottom: .25em;*/
+    text-align: center;
+    background-color: #3498db;
+    border-radius: 0;
+    border: none;
+    color: white;
+    padding: .25em;
+}
+
+#apply-filters-button{
+    margin-left: 0;
+    margin-bottom: 0.1em;
+}
+
 .card {
     box-shadow: 0 1px 2px rgba(0,0,0,.3);
     border-radius: .1em;
@@ -182,7 +209,8 @@ body {
 
 .filter-items-box{
     overflow: auto;
-    max-height: 100px;
+    max-height: 170px;
+    padding: .2em;
 }
 
 
@@ -279,6 +307,7 @@ body {
     border-right: 1px solid #3498db;
     padding-right: .5em;
 }
+
 .date-filter-item{
     /*border-right: 1px solid #3498db;*/
     color: #3498db;
@@ -299,6 +328,10 @@ body {
     color: white;*/
     color: #C2185B;
     border-bottom: 3px solid #C2185B;
+}
+
+#date-range{
+    font-size: 1.5em;
 }
 .bar {
     fill: #2980b9;
@@ -431,13 +464,6 @@ hr{
     transition: 1s;
 }
 */
-
-#apply-filters-button{
-    width: 100%;
-    margin-bottom: 1em;
-    background-color: #3498db;
-    border-color: #3498db;
-}
 
 .label {
     z-index: 1 ;

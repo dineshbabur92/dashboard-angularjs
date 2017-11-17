@@ -2,6 +2,8 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "charts", functi
 
     $scope.filters = {};
     $scope.selectedFilters ={};
+    $scope.date_from = "";
+    $scope.date_to = "";
 
     $scope.today = new Date();
     $scope.dateFilterOptions = {"Day": 0, "Week": 7, "Month": 30, "Quarter": 90, "Year": 365, "Total": -1};
@@ -119,6 +121,8 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "charts", functi
 
 			$scope.count_checkins = response.data.results.chart5[0].count_checkins;
 			$scope.count_vehicles = response.data.results.chart5[0].count_vehicles;
+			$scope.date_from = response.data.results.chart5[0].min_date.split("T")[0].split("-").join(".");
+			$scope.date_to = response.data.results.chart5[0].max_date.split("T")[0].split("-").join(".");
 
 	  		charts.createChart("horizontal-bar", {
 	    		data: response.data.results.chart1,
@@ -151,6 +155,7 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "charts", functi
 	            value_field: response.data.value_fields.chart4,
 	            draw_height: .9
 	    	}, "chart4");
+
 	    	$("#cover").css({"visibility": "hidden"});
 			$("#loader").css({"visibility": "hidden"});
 		}, function(error) {

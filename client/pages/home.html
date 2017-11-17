@@ -86,7 +86,8 @@
 			 <div id="left-panel" class="col-md-2 card">
     			
 		    	<div id="filters-container">
-					
+					<div id="filter-title">Vorauswahl</div>
+					<hr/>
 					<div id="filters-holder">
 						<div ng-repeat="(filter_name, filter_items) in filters">
 							<div class="filter-name">{{ filter_name }}</div>
@@ -115,11 +116,16 @@
 			<div class="col-md-10">
 				<div id="summary" class="col-md-12 svg-holder card">
 					<div id="vehicle-summary">
-						<div class="summary-title">Vehicles(s)</div>
+						<div class="summary-title">Auslese Zeiraum</div>
+						<div class="summary-number" id="date-range">{{date_from}} - {{date_to}}</div>
+					</div>
+					<!-- <div>Auslese Zeiraum: {{date_from}} to {{date_to}}</div> -->
+					<div id="vehicle-summary">
+						<div class="summary-title">Fahrzeuge</div>
 						<div class="summary-number">{{count_vehicles}}</div>
 					</div>
 					<div ng-model="$scope.count_checkins" id="checkin-summary">
-						<div class="summary-title">Check-in(s)</div>
+						<div class="summary-title">CheckIns</div>
 						<div class="summary-number">{{count_checkins}}</div>
 					</div>
 				</div>

@@ -81,7 +81,7 @@ module.exports = function(wagner){
 				}
 				queries[i] = queries[i][0] + appendConditions(queries[i][1], req.body.filters, filterFieldMapping) + queries[i][2];
 			}
-			console.log(queries);
+			console.log(queries.chart5);
 			var all_results = {};
 			// console.log("Querying for chart 1: " + queries.chart1);
 			db.query(queries.chart1, function (error, results, fields) {
@@ -119,10 +119,10 @@ module.exports = function(wagner){
 								res.json({
 									results: all_results,
 									titles: {
-										chart1: "Top 20 FSP-Einträge pro 1000 KM",
-										chart2: "Aktuelle I-Stufe Verteilung(KW 40)",
-										chart3: "Top 10 gefahrene KM",
-										chart4: "Single Event Fehlerspeicher"
+										chart1: "Top 20 FSP Entries per 1000 KM",
+										chart2: "Actual I-Step Distribution(KW 40)",
+										chart3: "Top 10 Driven KM",
+										chart4: "Single Event DTCs"
 									},
 									category_fields: {
 										chart1: "FSP_Entry",

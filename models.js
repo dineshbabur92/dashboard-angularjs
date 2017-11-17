@@ -9,6 +9,8 @@ module.exports = function(wagner){
 
 		connection = mysql.createConnection({
 		  host     : process.env.MARIADB_IP, //'localhost',
+		  // host     : "ec2-35-158-52-217.eu-central-1.compute.amazonaws.com",
+		  // port: 4999,
 		  user     : 'root',
 		  password : 'dinesh',
 		  database : 'bmw'
