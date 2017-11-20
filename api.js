@@ -38,8 +38,10 @@ module.exports = function(wagner){
 		"VIN": "fahrzeugdaten.fgnr",
 		"I Step": "fahrzeugdaten.I_stufe_ho",
 		"Date": "fehlerspeicher.auslese_datum",
-		"Hour": "hour(fehlerspeicher.auslese_datum)"
-
+		"Hour": "hour(fehlerspeicher.auslese_datum)",
+		"FSP_Entry": "fehlerspeicher.fehler_ort_text",
+		"I_Step": "SUBSTRING_INDEX(SUBSTRING_INDEX(fahrzeugdaten.I_stufe_ho, '-', 3),'-',-2)",
+		"VIN": "fahrzeugdaten.fgnr"
 	}
 
 	function appendConditions(query, filters, fieldMapping){

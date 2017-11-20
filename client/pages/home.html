@@ -54,6 +54,9 @@
 	</div> -->
 
 	<!-- <button style="width: 100%" ng-click="toggleLeftPanel()">toggle</button> -->
+
+
+	<div id="info-popup" style="visibility: hidden">testing</div>
 	<div class="row">
 		
 
@@ -63,6 +66,10 @@
 			</div> -->
 			<div id="top-panel">
 				<div id="app-title">EFAS Dashboard</div>
+				<!-- <div id="vehicle-summary"> -->
+						<!-- <div class="summary-title">Auslese Zeiraum</div> -->
+						<div class="summary-number" id="date-range">Auslese Zeiraum: {{date_from}} - {{date_to}}</div>
+				<!-- </div> -->
 				<div id="timeline-filter-container">
 					<div id="timeline-filter" class="col-md-12 svg-holder">
 						<div id="date-filter">
@@ -81,7 +88,7 @@
 				</div>
 				<!-- <div id="show-timeline-filter-button" ng-click="toggleTopPanel()">
 					<div>Choose Date and Time</div>
-				</div> -->
+				</div> --> 		
 			</div>
 			 <div id="left-panel" class="col-md-2 card">
     			
@@ -90,11 +97,25 @@
 					<hr/>
 					<div id="filters-holder">
 						<div ng-repeat="(filter_name, filter_items) in filters">
-							<div class="filter-name">{{ filter_name }}</div>
+							<div class="filter-name" style="display: flex; justify-content: space-between;align-items: center;">{{ filter_name }}
+							<div>
+								<i class="fa fa-search" aria-hidden="true" ng-click="show_search =! show_search; search_term = ''" ng-init="show_search = false" class="glyphicon glyphicon-search pull-right" aria-hidden="true"></i>
+								<i class="fa fa-info-circle" onmouseleave="console.log('on mouse leave working');$('#info-popup').css('visibility', 'hidden');" ng-mouseenter="showFilterInfo(filter_name, $event)" aria-hidden="true"></i>
+							</div>
+							</div>
 							<hr/>
-							<div class="list-group filter-items-box checked-list-box filter-items">
-								<div class="" ng-repeat="item in filter_items">
-									<input type="checkbox" for-item="{{item}}" 
+							
+							<div id="{{filter_name}}-box" class="list-group filter-items-box checked-list-box filter-items">
+								<div ng-show="show_search" class="input-group">
+							      <!-- <span class="input-group-btn">
+							        <button class="btn btn-default" type="button">
+							        	<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+							        </button>
+							      </span> -->
+							      <input type="text" class="form-control" ng-init="search_term = ''" ng-model="search_term" ng-keyup="console.log($event.keyCode)" placeholder="Search">
+							    </div>
+								<div class="filter-item" ng-repeat="item in filter_items" id="{{filter_name}}-{{item}}" ng-show="item.toString().toLowerCase().includes(search_term.toLowerCase())">
+									<input id="{{filter_name}}-{{item}}-checkbox" type="checkbox" for-item="{{item}}" 
 										ng-click="filterChanged(this, $event)"/>
 									<span class="filter-item-name">{{item}}</span>
 								</div>
@@ -102,24 +123,24 @@
 						</div>
 					</div>
 
-					<button type="button" class="btn btn-primary" id="apply-filters-button" 
+					<!-- <button type="button" class="btn btn-primary" id="apply-filters-button" 
 						ng-click="getReport()">
 						APPLY <i class="fa fa-play" aria-hidden="true"></i>
-					</button>
-			</div>
+					</button> -->
+				</div>
 
 				<!-- <div id="show-filters-button" ng-click="toggleLeftPanel()">
 					<div>FILTERS</div>
 				</div> -->
 
 			</div>
-			<div class="col-md-10">
-				<div id="summary" class="col-md-12 svg-holder card">
+			<div class="col-md-8">
+				<!-- <div id="summary" class="col-md-4 svg-holder card">
 					<div id="vehicle-summary">
 						<div class="summary-title">Auslese Zeiraum</div>
 						<div class="summary-number" id="date-range">{{date_from}} - {{date_to}}</div>
 					</div>
-					<!-- <div>Auslese Zeiraum: {{date_from}} to {{date_to}}</div> -->
+					 <div>Auslese Zeiraum: {{date_from}} to {{date_to}}</div> 
 					<div id="vehicle-summary">
 						<div class="summary-title">Fahrzeuge</div>
 						<div class="summary-number">{{count_vehicles}}</div>
@@ -128,22 +149,96 @@
 						<div class="summary-title">CheckIns</div>
 						<div class="summary-number">{{count_checkins}}</div>
 					</div>
+				</div> -->
+				<div id="chart1" class="col-md-6 svg-holder card">
 				</div>
-				<div id="chart1" class="col-md-12 svg-holder card">
-				</div>
-				<div class="col-md-6" style="padding-left:0">
-					<div id="chart2" class="svg-holder card">
+				<div class="col-md-6">
+					<div id="chart2" class="col-md-12 svg-holder card">
 					</div>
-				</div>
-				<div class="col-md-6" style="padding-right:0">
-					<div id="chart3" class="svg-holder card">
+					<div id="chart3" class="col-md-12 svg-holder card">
 					</div>
 				</div>
 				<!-- <div id="chart4-tabs" class="col-md-4">
 				</div> -->
-				<div id="chart4" class="col-md-12 svg-holder card">
+				<div id="chart4-container" class="col-md-12 svg-holder card" style="display:flex; align-items: center;justify-content: 
+					center;">
+					<div id="chart4-tabs" class="col-md-2">
+						<div class="active-tab dummy card col-md-12">
+							Single Event DTC
+						</div>
+						<div class="dummy card col-md-12">
+							Checkins
+						</div>
+						<div class="dummy card col-md-12">
+							SVK Driving Performance
+						</div>
+					</div>
+					<div id="chart4" class="col-md-10 col-md-offet-2">
+					</div>
 				</div>
 			</div>
-		</div>
+
+			<div id="right-panel-container" class="col-md-2">
+				<div id="right-panel" class="col-md-12 card">
+	    			
+			    	<div id="filters-container">
+						<div id="filter-title">Selections</div>
+						<hr/>
+						<div id="filters-holder">
+							<div ng-repeat="(filter_name, filter_items) in selectedFilters" ng-if="filter_name !== 'Hour' && filter_name!=='Date'">
+								<div class="filter-name">{{ filter_name }}
+									<!-- <span ng-click="show_search =! show_search; search_term = ''" ng-init="show_search = false" class="glyphicon glyphicon-search pull-right" aria-hidden="true"></span> -->
+								</div>
+								<hr/>
+								
+								<div id="{{filter_name}}-box" class="list-group filter-items-box checked-list-box filter-items">
+									<div class="filter-item" ng-repeat="item in filter_items" style="display: flex; justify-content: space-between">
+										<!-- <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> -->
+
+										<!-- <input type="checkbox" for-item="{{item}}" 
+											ng-click="filterChanged(this, $event)"/> -->
+										<span class="filter-item-name">{{item}}</span>
+										<i class="fa fa-times pull-tight" ng-click="filterRemoved(filter_name, item)" aria-hidden="true"></i>
+										<!-- <span class="glyphicon glyphicon-remove pull-right" aria-hidden="true"></span> -->
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+					</div>
+
+
+					
+					<!-- <div id="show-filters-button" ng-click="toggleLeftPanel()">
+						<div>FILTERS</div>
+					</div> -->
+				</div>
+
+				<button type="button" class="btn btn-primary dummy card" id="apply-filters-button" 
+						ng-click=clearFilters();>
+						Clear Selection</i>
+				</button>
+				<div class="col-md-12 dummy card">Travel Insurance</div>
+				<div id="vehicle-summary" class="col-md-12 dummy card">
+					<div class="summary-title">Fahrzeuge</div>
+					<div class="summary-number">{{count_vehicles}}</div>
+				</div>
+				<div ng-model="$scope.count_checkins" class="col-md-12 dummy card" id="checkin-summary">
+					<div class="summary-title">CheckIns</div>
+					<div class="summary-number">{{count_checkins}}</div>
+				</div>
+				<div class="col-md-12 invisible-break"></div>
+				<div class="col-md-12">
+				Quick Access:
+				</div>
+				<div class=" col-md-12 dummy card">DTC Top List &nbsp;<i class="fa fa-bar-chart" aria-hidden="true"></i></div>
+				<div class=" col-md-12 dummy card">ALM Tickets &nbsp;<i class="fa fa-bar-chart" aria-hidden="true"></i></div>
+				<div class=" col-md-12 dummy card">Vehicle Statistics &nbsp;<i class="fa fa-line-chart" aria-hidden="true"></i></div>
+				<div class=" col-md-12 dummy card">Vehicle Mileage &nbsp;<i class="fa fa-line-chart" aria-hidden="true"></i></div>
+				<div class=" col-md-12 dummy card">Troubleshooting &nbsp;<i class="fa fa-bar-chart" aria-hidden="true"></i></div>
+				<div class=" col-md-12 dummy card">Vehicle Overview &nbsp;<i class="fa fa-bar-chart" aria-hidden="true"></i></div>
+
+			</div>
 	</div>
 <!-- </div> -->

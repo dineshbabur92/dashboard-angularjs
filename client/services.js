@@ -1,6 +1,11 @@
-efasApp.service("charts", function(){
+efasApp.service("charts", function($rootScope){
     
-	var container_space = $(window).innerHeight() * .85
+    this.filters = {};
+    var filters = this.filters;
+    
+	this.getFilters = function(){return filters;}
+
+	var container_space = $(window).innerHeight() * .90
 	
 	var drawPie = function(data, holder){
 
@@ -23,24 +28,32 @@ efasApp.service("charts", function(){
 	        text: data.title
 	    },
 	    tooltip: {
-	        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+	        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b><br/>' + data.selectedFilters
 	    },
 	    plotOptions: {
 	        pie: {
-	            allowPointSelect: true,
-	            cursor: 'pointer',
-	            // dataLabels: {
-	            //     enabled: true,
-	            //     format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-	            //     style: {
-	            //         color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-	            //     }
-	            // },
-	            dataLabels: {
-	                enabled: false
-	            },
-	            showInLegend: true
-		        }
+		            allowPointSelect: true,
+		            cursor: 'pointer',
+		            dataLabels: {
+		                enabled: true,
+		                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+		                style: {
+		                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+		                }
+		            },
+		            dataLabels: {
+		                enabled: false
+		            },
+		            showInLegend: true,
+		            events:{
+		            	click: function(e){
+		            		console.log("selected:", e.point.name);
+		            		filters[data.title_field] = e.point.name;
+		            		console.log("Filters on click: ", filters);
+		            		$rootScope.$apply();
+		            	}
+		            }
+		        }  
 	    },
 	    series: [{
 	        name: 'Brands',
@@ -87,6 +100,12 @@ efasApp.service("charts", function(){
 		Highcharts.chart(holder, {
 		    chart: {
 		        type: 'bar'
+		        // ,
+		        // events: {
+	         //        click: function(e) {
+	         //            console.log("highchart event", e);
+	         //        }
+          //   	}
 		        // marginRight: holder === "chart4" ? undefined : 50
 		    },
 		    title: {
@@ -125,13 +144,15 @@ efasApp.service("charts", function(){
 		    tooltip: {
 		        valueSuffix: '',
 		        positioner: function(labelWidth, labelHeight, point) {
-			        var tooltipX = holder === "chart4" ? point.plotX + 400 : point.plotX;
+			        // var tooltipX = holder === "chart4" ? point.plotX + 400 : point.plotX;
+			        var tooltipX = ($("#" + holder).width()  * 0.1);
 			        var tooltipY = point.plotY;
 			        return {
 			            x: tooltipX,
 			            y: tooltipY
 			        };
 			    },
+			    pointFormat: '{series.name}: <b>{point.y}</b><br/>' + data.selectedFilters,
 			    // useHTML: true,
 			    // "style":{
 			    // 	"padding": "0"
@@ -142,12 +163,21 @@ efasApp.service("charts", function(){
 			    shadow: true,
 			    useHTML: true,
 			    percentageDecimals: 2,
+			    padding: 0,
 			    backgroundColor: "rgba(255,255,255,1)"
 		    },
 		    plotOptions: {
 		        bar: {
 		            dataLabels: {
 		                enabled: true
+		            },
+		            events:{
+		            	click: function(e){
+		            		console.log("selected:", e.point.category);
+		            		filters[data.category_field] = e.point.category;
+		            		console.log("Filters on click: ", filters);
+		            		$rootScope.$apply();
+		            	}
 		            }
 		        }
 		    },

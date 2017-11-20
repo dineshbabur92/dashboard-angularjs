@@ -13,6 +13,25 @@ body {
     /*font-weight: bold;*/
 
 }
+
+#info-popup{
+    position: fixed;
+    visibility: visible;
+    /*width: 400px;*/
+    background-color: rgba(52,152,219,.8);
+    color: white;
+    left: 0;
+    top: 0;
+    z-index: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    /*height: 50px;*/
+    padding: .25em;
+    border-radius: 3px;
+}
+
 #app-title{
     color: #3498db;
     font-weight: bold;
@@ -61,9 +80,12 @@ body {
     left: 0px;
     width: 100%;
     transition: .5s;
-    padding: 4em;
+    padding: 3em 1em;
 }
 
+.container{
+    padding .5em;
+}
 #left-panel{
     /*border-right: 1px solid lightgray;*/
     background-color: rgba(0,0,0,0);
@@ -78,6 +100,7 @@ body {
     /*height: 100vh;*/
     display: flex;
     flex-direction: row;
+    height: 180.5vh;
     /*z-index: 400;*/
     /*height: 85vh;*/
 }
@@ -85,7 +108,7 @@ body {
 #top-panel{
     /*background-color: rgba(0,0,0,0);*/
     background-color: white;
-    padding: 0em 1em;
+    padding: .1em 2em;
     position: fixed;
     left: 0;
     top: 0;
@@ -99,6 +122,34 @@ body {
     box-shadow: 0px 2px 4px rgba(0,0,0,.3);
 }
 
+#right-panel-container{
+    padding-left: 0;
+    height: 180.5vh;
+}
+
+#right-panel{
+    /*border-right: 1px solid lightgray;*/
+    background-color: rgba(0,0,0,0);
+    padding: 0em;
+    /*position: fixed;
+    left: 0px;
+    top: 0;*/
+    /*z-index: 200;*/
+    /*width: 300px;*/
+    transition: .5s;
+    overflow: auto;
+    /*height: 100vh;*/
+    display: flex;
+    flex-direction: row;
+    height: 27vh;
+    /*justify-content: stretch;*/
+    /*align-items: stretch;*/
+    /*z-index: 400;*/
+    /*height: 85vh;*/
+}
+#right-panel div{
+    /*align-self: stretch;*/
+}
 #filters-holder{
     overflow: auto;
     margin: .25em;
@@ -108,6 +159,7 @@ body {
 #filters-container{
     overflow: auto;
     flex-grow: 1;
+    /*align-self: stretch;*/
     /*padding: .25em;*/
     background-color: white;
     /*z-index: 400;*/
@@ -180,7 +232,7 @@ body {
 .card {
     box-shadow: 0 1px 2px rgba(0,0,0,.3);
     border-radius: .1em;
-    transition: 0.3s; 
+    transition: 0.3s;
     /*resize: both;*/
 }
 
@@ -209,7 +261,7 @@ body {
 
 .filter-items-box{
     overflow: auto;
-    max-height: 170px;
+    max-height: 120px;
     padding: .2em;
 }
 
@@ -240,7 +292,7 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    padding: 0em .5em;
+    padding: 0em .1em;
     margin: 0;
 }
 #timeline-filter{
@@ -258,7 +310,7 @@ body {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    margin: .25em;
+    margin: .15em;
     
 }
 
@@ -271,10 +323,12 @@ body {
 }
 
 .summary-title{
-    font-size: .75em;
+    font-size: .5em;
+    font-weight: bold;
 }
 .summary-number{
-    font-size: 2em;
+    font-size: 1em;
+    /*font-weight: bold;*/
 }
 #hour-filter{
     /*flex-direction: column;*/
@@ -331,7 +385,8 @@ body {
 }
 
 #date-range{
-    font-size: 1.5em;
+    font-size: 1em;
+    color: #3498db;
 }
 .bar {
     fill: #2980b9;
@@ -367,12 +422,12 @@ g{
 
 div.svg-holder, svg{
     background-color: white;
-    margin-bottom: 10px;
+    /*margin-bottom: 10px;*/
     /*border-radius: 10px;*/
 }
 
 div.svg-holder svg{
-    padding: 7px;
+    /*padding: 7px;*/
 }
 div.svg-holder, #left-panel{
     /*border-radius: 10px;*/
@@ -380,6 +435,21 @@ div.svg-holder, #left-panel{
     /*border: 1px solid #1abc9c;*/
 }
 
+#chart1, #chart2, #chart3, #chart4{
+    /*height: 85vh;*/
+}
+
+#chart4-container {
+    margin-top: .55vh;
+}
+
+#chart3{
+    margin-top: .55vh;
+}
+
+[class*='col-md-']{
+    padding: 0 .25em;
+}
 
 /*div.svg-holder svg{
     padding: 7px;
@@ -392,8 +462,8 @@ svg, #left-panel{
 }*/
 
 #chart1{
-    padding-top: 5px;
-    padding-bottom: 5px;
+    /*padding-top: 5px;*/
+    /*padding-bottom: 5px;*/
 }
 
 .amChartsLegend {
@@ -446,6 +516,23 @@ hr{
 }
 #toggle-button{
     width: 3em;
+}
+
+.dummy{
+    background-color: #3498db;
+    color: white;
+    text-align: center;
+    margin-top: .25em;
+    padding:.15em;
+}
+
+.invisible-break{
+    height: .75em;
+}
+
+.active-tab{
+    background-color: white;
+    color: #3498db;
 }
 
 /* The starting CSS styles for the enter animation */
