@@ -8,22 +8,27 @@ var app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static(__dirname + '/client')) ;
 
 wagner.factory("app", function(){
 	return app;
 });
 
-require("./models")(wagner);
+require("./models3")(wagner).then(function(status){
+	console.log("db connect status", status);
+	app.use("/", require("./api")(wagner));
+	app.listen(8080);
+});
 
-app.use(express.static(__dirname + '/client')) ;
-app.use("/", require("./api")(wagner));
 
-setInterval(wagner.invoke(function(db){
-    return function(){
-    	console.log("keeping the connection alive");
-    	db.query('SELECT 1');
-	}
-}), 10000);
+
+
+// setInterval(wagner.invoke(function(db){
+//     return function(){
+//     	console.log("keeping the connection alive");
+//     	db.query('SELECT 1');
+// 	}
+// }), 10000);
 
 process.on('uncaughtException', function(err) {
   console.log('Caught exception: ' + err);
@@ -37,7 +42,7 @@ process.on('uncaughtException', function(err) {
 // // setup the logger 
 // app.use(logger('combined', {stream: accessLogStream}));
 
-app.listen(8080);
+
 console.log("app listening in 8080!");
 
 

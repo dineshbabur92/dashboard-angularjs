@@ -42,6 +42,7 @@ module.exports = function(wagner){
 		"FSP_Entry": "fehlerspeicher.fehler_ort_text",
 		"I_Step": "SUBSTRING_INDEX(SUBSTRING_INDEX(fahrzeugdaten.I_stufe_ho, '-', 3),'-',-2)",
 		"VIN": "fahrzeugdaten.fgnr"
+
 	}
 
 	function appendConditions(query, filters, fieldMapping){
@@ -59,6 +60,7 @@ module.exports = function(wagner){
 					continue;
 				}
 				query_values += ",'" + filters[i][j] + "'";
+				// query_values += "," + i=="IS DTC" ? "'" : ""  + filters[i][j] + i=="IS DTC" ? "'" : "";
 			}
 			query = query + " and " + fieldMapping[i] + " in (" + query_values + ")"
 		}
@@ -86,13 +88,13 @@ module.exports = function(wagner){
 			console.log(queries);
 			var all_results = {};
 			// console.log("Querying for chart 1: " + queries.chart1);
-			db.query(queries.chart1, function (error, results, fields) {
-				// console.log("chart1 error: "+ error + "chart1 results: " + results);
-				if (error){
-					res.json({message: "chart1 error"});
-					return;
-				}
-				all_results.chart1 = results;
+			// db.query(queries.chart1, function (error, results, fields) {
+			// 	// console.log("chart1 error: "+ error + "chart1 results: " + results);
+			// 	if (error){
+			// 		res.json({message: "chart1 error"});
+			// 		return;
+			// 	}
+			// 	all_results.chart1 = results;
 				db.query(queries.chart2, function (error, results, fields) {
 					if (error){
 						res.json({message: "chart2 error"});
@@ -142,7 +144,7 @@ module.exports = function(wagner){
 							});
 						});
 					});
-				});
+				// });
 				
 			}
 		);
