@@ -10,7 +10,7 @@
         <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"> -->
 
         <link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
-        
+		<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
         <link rel="stylesheet" href="css/styles_testing.css"/>
         <!-- <link rel="stylesheet" href="css/semantic.css"/> -->
         <link rel="stylesheet" href="css/styles.css"/>
@@ -19,7 +19,12 @@
         <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/components/sidebar.css"/> -->
         
         <!-- load angular via CDN -->
-
+		<style>
+			input,
+			input::-webkit-input-placeholder {
+				font-size: 14px;
+			}
+		</style>  
         <script
             src="https://code.jquery.com/jquery-3.2.1.min.js"
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
@@ -81,7 +86,7 @@
           <div id="loader" style="visibility: hidden;"></div>
         </div>
         <div class="main-holder">
-            <div class="container">
+            <div class="container-fluid body-bg">
               <div ng-view></div>
             </div>
         </div>

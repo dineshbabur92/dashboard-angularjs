@@ -1,4 +1,4 @@
-efasApp.controller("homeController",["$scope", "$log", "$http", "charts", function($scope, $log, $http, charts){
+efasApp.controller("homeController",["$scope", "$log", "$http", "charts", "$rootScope", function($scope, $log, $http, charts, $rootScope){
 
     $scope.filters = {};
     $scope.selectedFilters ={};
@@ -160,7 +160,7 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "charts", functi
 			// 	}
 			// }
     	}
-
+    	// console.log()
     	$scope.getReport();
 
     }
@@ -188,9 +188,22 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "charts", functi
 			$scope.getReport();
 
     }
+    $scope.count = 0;
+    $scope.$watch('count', function(newVal){
+    	console.log("count changed: ", newVal);
+    	if(newVal == 5){
+    		$("#cover").css({"visibility": "hidden"});
+			$("#loader").css({"visibility": "hidden"});
+			$scope.count = 0;
+    	}
+    });
 
     $scope.getReport = function(){
 
+      // if ($scope.cnt == 0) {
+
+      // $scope.cnt = 1;
+      	$scope.count = 0;
   		$("#cover").css({"visibility": "visible"});
 		$("#loader").css({"visibility": "visible"});
     	 $http({
@@ -200,11 +213,6 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "charts", functi
 		}).then(function(response) {
 
 			$log.log("report response", response);
-
-			$scope.count_checkins = response.data.results.chart5[0].count_checkins;
-			$scope.count_vehicles = response.data.results.chart5[0].count_vehicles;
-			$scope.date_from = response.data.results.chart5[0].min_date ? response.data.results.chart5[0].min_date.split("T")[0].split("-").join(".") : $scope.selectedFilters["Date"][0];
-			$scope.date_to = response.data.results.chart5[0].min_date ? response.data.results.chart5[0].max_date.split("T")[0].split("-").join(".") : $scope.selectedFilters["Date"][1];
 
             var selectedFiltersArray = [];
             for(var i in $scope.selectedFilters){
@@ -220,41 +228,118 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "charts", functi
 	            category_field: response.data.category_fields.chart1,
 	            value_field: response.data.value_fields.chart1,
 	            draw_height: 1,
-	            selectedFilters: selectedFiltersArray.join("<br/>")
+	            selectedFilters: selectedFiltersArray.join("<br/>"),
+				color: "#0072A7" 
 	    	}, "chart1");
+	    	$scope.count = $scope.count + 1;
+	    	// $rootScope.$apply();
 
-			charts.createChart("pie", {
-	    		data: response.data.results.chart2,
-	    		title: response.data.titles.chart2,
-	            title_field: response.data.category_fields.chart2,
-	            value_field: response.data.value_fields.chart2,
-	            draw_height: .497,
-                selectedFilters: selectedFiltersArray.join("<br/>")
-	    	}, "chart2");
-
-			charts.createChart("horizontal-bar", {
-	    		data: response.data.results.chart3,
-	            title: response.data.titles.chart3,
-	            category_field: response.data.category_fields.chart3,
-	            value_field: response.data.value_fields.chart3,
-	            draw_height: .497,
-                selectedFilters: selectedFiltersArray.join("<br/>")
-	    	}, "chart3");
-
-	    	charts.createChart("horizontal-bar", {
-	    		data: response.data.results.chart4,
-	            title: response.data.titles.chart4,
-	            category_field: response.data.category_fields.chart4,
-	            value_field: response.data.value_fields.chart4,
-	            draw_height: 1,
-                selectedFilters: selectedFiltersArray.join("<br/>")
-	    	}, "chart4");
-
-	    	$("#cover").css({"visibility": "hidden"});
-			$("#loader").css({"visibility": "hidden"});
 		}, function(error) {
 			$log.log("error: " + error);
-		});
+		}).then(function(){
+
+			 $http({
+				 method: 'POST',
+				 url: '/report_2',
+				 data: {filters: $scope.selectedFilters}
+			 }).then(function(response){
+				 var selectedFiltersArray = [];
+				 for(var i in $scope.selectedFilters){
+					 if(i=='Hour' || i=='Date')
+						 continue;
+					 selectedFiltersArray.push(i + ": " + $scope.selectedFilters[i].join(", "));
+				 }
+
+				 charts.createChart("pie", {
+					 data: response.data.results.chart2,
+					 title: response.data.titles.chart2,
+					 title_field: response.data.category_fields.chart2,
+					 value_field: response.data.value_fields.chart2,
+					 draw_height: .497,
+					 selectedFilters: selectedFiltersArray.join("<br/>")
+				 }, "chart2");
+				 $scope.count = $scope.count + 1;
+				 // $rootScope.$apply();
+			 });
+
+
+		 }).then(function(){
+
+			 $http({
+				 method: 'POST',
+				 url: '/report_3',
+				 data: {filters: $scope.selectedFilters}
+			 }).then(function(response){
+			 	console.log("Chart 3 Response ", response);
+				 var selectedFiltersArray = [];
+				 for(var i in $scope.selectedFilters){
+					 if(i=='Hour' || i=='Date')
+						 continue;
+					 selectedFiltersArray.push(i + ": " + $scope.selectedFilters[i].join(", "));
+				 }
+
+				 charts.createChart("horizontal-bar", {
+					 data: response.data.results.chart3,
+					 title: response.data.titles.chart3,
+					 category_field: response.data.category_fields.chart3,
+					 value_field: response.data.value_fields.chart3,
+					 draw_height: .497,
+					 selectedFilters: selectedFiltersArray.join("<br/>"),
+					color: "#24B8FD"
+				 }, "chart3");
+				 $scope.count = $scope.count + 1;
+				 // $rootScope.$apply();
+			 });
+
+
+		 }).then(function(){
+			 $http({
+				 method: 'POST',
+				 url: '/report_4',
+				 data: {filters: $scope.selectedFilters}
+			 }).then(function(response){
+
+				 var selectedFiltersArray = [];
+				 for(var i in $scope.selectedFilters){
+					 if(i=='Hour' || i=='Date')
+						 continue;
+					 selectedFiltersArray.push(i + ": " + $scope.selectedFilters[i].join(", "));
+				 }
+
+				 charts.createChart("horizontal-bar", {
+					 data: response.data.results.chart4,
+					 title: response.data.titles.chart4,
+					 category_field: response.data.category_fields.chart4,
+					 value_field: response.data.value_fields.chart4,
+					 draw_height: 1,
+					 selectedFilters: selectedFiltersArray.join("<br/>")
+				 }, "chart4");
+				 $scope.count = $scope.count + 1;
+				 // $rootScope.$apply();
+
+			 });
+
+		 }).then(function(){
+
+			 $http({
+				 method: 'POST',
+				 url: '/report_5',
+				 data: {filters: $scope.selectedFilters}
+			 }).then(function(response) {
+				 $scope.count_checkins = response.data.results.chart5[0].count_checkins;
+				 $scope.count_vehicles = response.data.results.chart5[0].count_vehicles;
+				 $scope.date_from = response.data.results.chart5[0].min_date ? response.data.results.chart5[0].min_date.split("T")[0].split("-").join(".") : $scope.selectedFilters["Date"][0];
+				 $scope.date_to = response.data.results.chart5[0].min_date ? response.data.results.chart5[0].max_date.split("T")[0].split("-").join(".") : $scope.selectedFilters["Date"][1];
+				 $scope.count = $scope.count + 1;
+				 // $rootScope.$apply();
+			 })
+
+		 }).then(function(){
+
+			 // $("#cover").css({"visibility": "hidden"});
+			 // $("#loader").css({"visibility": "hidden"});
+		 });
+        // }
     }
 
     //load filters
