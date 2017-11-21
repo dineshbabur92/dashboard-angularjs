@@ -189,72 +189,77 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "charts", functi
 
     }
 
+    $scope.count = 0;
+    $scope.$watch('count', function(newVal){
+    	console.log("count changed: ", newVal);
+    	if(newVal == 5){
+    		$("#cover").css({"visibility": "hidden"});
+			$("#loader").css({"visibility": "hidden"});
+			$scope.count = 0;
+    	}
+    });
+
+
     $scope.getReport = function(){
 
   		$("#cover").css({"visibility": "visible"});
 		$("#loader").css({"visibility": "visible"});
-    	 $http({
-			method: 'POST',
-			url: '/report',
-			data: {filters: $scope.selectedFilters}
-		}).then(function(response) {
 
-			$log.log("report response", response);
+		var charts_needed = ["chart1", "chart2", "chart3", "chart4"];
 
-			$scope.count_checkins = response.data.results.chart5[0].count_checkins;
-			$scope.count_vehicles = response.data.results.chart5[0].count_vehicles;
-			$scope.date_from = response.data.results.chart5[0].min_date ? response.data.results.chart5[0].min_date.split("T")[0].split("-").join(".") : $scope.selectedFilters["Date"][0];
-			$scope.date_to = response.data.results.chart5[0].min_date ? response.data.results.chart5[0].max_date.split("T")[0].split("-").join(".") : $scope.selectedFilters["Date"][1];
+		var selectedFiltersArray = [];
+        for(var i in $scope.selectedFilters){
+            if(i=='Hour' || i=='Date')
+                    continue;
+            selectedFiltersArray.push(i + ": " + $scope.selectedFilters[i].join(", "));
+        }
 
-            var selectedFiltersArray = [];
-            for(var i in $scope.selectedFilters){
-                if(i=='Hour' || i=='Date')
-                        continue;
-                selectedFiltersArray.push(i + ": " + $scope.selectedFilters[i].join(", "));
-            }
-            // console.log("selectedFiltersArray", selectedFiltersArray);
+    	for(var i in charts_needed)
+    	{
+    		console.log("making request for ", charts_needed[i]);
+    		let chart_requested = charts_needed[i];
 
-	  		charts.createChart("horizontal-bar", {
-	    		data: response.data.results.chart1,
-	            title: response.data.titles.chart1,
-	            category_field: response.data.category_fields.chart1,
-	            value_field: response.data.value_fields.chart1,
-	            draw_height: 1,
-	            selectedFilters: selectedFiltersArray.join("<br/>")
-	    	}, "chart1");
+			$http({
+				method: 'POST',
+				url: '/report/' + chart_requested,
+				data: {filters: $scope.selectedFilters}
+			}).then(function(response){
+				console.log("report's response for", chart_requested, response);
+				if(chart_requested==="chart2"){
+					console.log("calling to create chart for ", chart_requested);
+					charts.createChart("pie", {
+			    		data: response.data.results[chart_requested],
+			    		title: response.data.titles[chart_requested],
+			            title_field: response.data.category_fields[chart_requested],
+			            value_field: response.data.value_fields[chart_requested],
+			            draw_height: .497,
+		                selectedFilters: selectedFiltersArray.join("<br/>")
+			    	}, chart_requested);
+				}
+				else if(chart_requested==="chart5"){
+					console.log("calling to create chart for ", chart_requested);
+					$scope.count_checkins = response.data.results.chart5[0].count_checkins;
+					$scope.count_vehicles = response.data.results.chart5[0].count_vehicles;
+					$scope.date_from = response.data.results.chart5[0].min_date ? response.data.results.chart5[0].min_date.split("T")[0].split("-").join(".") : $scope.selectedFilters["Date"][0];
+					$scope.date_to = response.data.results.chart5[0].min_date ? response.data.results.chart5[0].max_date.split("T")[0].split("-").join(".") : $scope.selectedFilters["Date"][1];
+				}
+				else{
+					console.log("calling to create chart for ", chart_requested);
+					charts.createChart("horizontal-bar", {
+			    		data: response.data.results[chart_requested],
+			            title: response.data.titles[chart_requested],
+			            category_field: response.data.category_fields[chart_requested],
+			            value_field: response.data.value_fields[chart_requested],
+			            draw_height: chart_requested==="chart3" ? .497 : 1,
+			            selectedFilters: selectedFiltersArray.join("<br/>")
+			    	}, chart_requested);
+				}
+				$scope.count = $scope.count + 1;
 
-			charts.createChart("pie", {
-	    		data: response.data.results.chart2,
-	    		title: response.data.titles.chart2,
-	            title_field: response.data.category_fields.chart2,
-	            value_field: response.data.value_fields.chart2,
-	            draw_height: .497,
-                selectedFilters: selectedFiltersArray.join("<br/>")
-	    	}, "chart2");
-
-			charts.createChart("horizontal-bar", {
-	    		data: response.data.results.chart3,
-	            title: response.data.titles.chart3,
-	            category_field: response.data.category_fields.chart3,
-	            value_field: response.data.value_fields.chart3,
-	            draw_height: .497,
-                selectedFilters: selectedFiltersArray.join("<br/>")
-	    	}, "chart3");
-
-	    	charts.createChart("horizontal-bar", {
-	    		data: response.data.results.chart4,
-	            title: response.data.titles.chart4,
-	            category_field: response.data.category_fields.chart4,
-	            value_field: response.data.value_fields.chart4,
-	            draw_height: 1,
-                selectedFilters: selectedFiltersArray.join("<br/>")
-	    	}, "chart4");
-
-	    	$("#cover").css({"visibility": "hidden"});
-			$("#loader").css({"visibility": "hidden"});
-		}, function(error) {
-			$log.log("error: " + error);
-		});
+			}).then(function(error){
+				$log.log("error: " + error);
+			});
+    	}
     }
 
     //load filters

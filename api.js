@@ -2,7 +2,9 @@ var bodyparser = require("body-parser");
 var httpstatus = require("http-status");
 var express = require("express");
 var underscore = require("underscore");
-var queries_base = require("./to_drive/data/queries");
+var queries_base = require("./to_drive/data/queries_10days");
+var mysql = require("mysql");
+
 module.exports = function(wagner){
 
 	api = express.Router();
@@ -68,87 +70,62 @@ module.exports = function(wagner){
 		return query;
 	}
 	
-	api.post("/report", wagner.invoke(function(db){
+	api.post("/report/:chart", wagner.invoke(function(db){
+
 		return function(req, res){
-			var queries = {};
-			for(var i in queries_base){
-				queries[i] = queries_base[i];
+			console.log("req param: ", req.params.chart);
+			var chart = req.params.chart;
+			var query = queries_base[chart];
+			if(chart==="chart5")
+			{
+				query =  query[0] + appendConditions(query[1], {
+						"Date": req.body.filters["Date"] ? req.body.filters["Date"] : [], 
+						"Hour": req.body.filters["Hour"] ? req.body.filters["Hour"] : []
+					}, filterFieldMapping);
 			}
-			for(var i in queries){
-				if(i==="chart5")
-				{
-					queries[i] =  queries[i][0] + appendConditions(queries[i][1], {
-							"Date": req.body.filters["Date"] ? req.body.filters["Date"] : [], 
-							"Hour": req.body.filters["Hour"] ? req.body.filters["Hour"] : []
-						}, filterFieldMapping);
-					continue;
-				}
-				queries[i] = queries[i][0] + appendConditions(queries[i][1], req.body.filters, filterFieldMapping) + queries[i][2];
-			}
-			console.log(queries);
+			else
+				query = query[0] + appendConditions(query[1], req.body.filters, filterFieldMapping) + query[2];
+
 			var all_results = {};
-			// console.log("Querying for chart 1: " + queries.chart1);
-			// db.query(queries.chart1, function (error, results, fields) {
-			// 	// console.log("chart1 error: "+ error + "chart1 results: " + results);
-			// 	if (error){
-			// 		res.json({message: "chart1 error"});
-			// 		return;
-			// 	}
-			// 	all_results.chart1 = results;
-				db.query(queries.chart2, function (error, results, fields) {
+			let conn = mysql.createConnection(db);
+			conn.connect(function(){
+				console.log("connected for ", chart);
+				conn.query(query, function (error, results, fields) {
+				// console.log("chart1 error: "+ error + "chart1 results: " + results);
 					if (error){
-						res.json({message: "chart2 error"});
+						console.log(error);
+						res.json({error: error});
 						return;
 					}
-					all_results.chart2 = results;
-					db.query(queries.chart3, function (error, results, fields) {
-						if (error){
-							res.json({message: "chart3 error"});
-							return;
+					all_results[chart] = results;
+					// console.log(all_results);
+					conn.end();
+					res.json({
+						results: all_results,
+						titles: {
+							chart1: "Top 20 FSP-Einträge pro 1000 KM",
+							chart2: "Aktuelle I-Stufe Verteilung(KW 40)",
+							chart3: "Top 10 gefahrene KM",
+							chart4: "Single Event Fehlerspeicher"
+						},
+						category_fields: {
+							chart1: "FSP_Entry",
+							chart2: "I_Step",
+							chart3: "VIN",
+							chart4: "FSP_Entry"
+						},
+						value_fields: {
+							chart1: "Occurences",
+							chart2: "Checkins",
+							chart3: "KM_Driven",
+							chart4: "Checkins",
 						}
-						all_results.chart3 = results;
-						db.query(queries.chart4, function (error, results, fields) {
-							if (error){
-								res.json({message: "chart4 error"});
-								return;
-							}
-							all_results.chart4 = results;
-							db.query(queries.chart5, function (error, results, fields) {
-								if (error){
-									res.json({message: "chart5 error"});
-									return;
-								}
-								all_results.chart5 = results;
-								// console.log(all_results);
-								res.json({
-									results: all_results,
-									titles: {
-										chart1: "Top 20 FSP-Einträge pro 1000 KM",
-										chart2: "Aktuelle I-Stufe Verteilung(KW 40)",
-										chart3: "Top 10 gefahrene KM",
-										chart4: "Single Event Fehlerspeicher"
-									},
-									category_fields: {
-										chart1: "FSP_Entry",
-										chart2: "I_Step",
-										chart3: "VIN",
-										chart4: "FSP_Entry"
-									},
-									value_fields: {
-										chart1: "Occurences",
-										chart2: "Checkins",
-										chart3: "KM_Driven",
-										chart4: "Checkins",
-									}
-								});
-							});
-						});
 					});
-				// });
-				
-			}
-		);
-	}}));
+				});
+			});
+			// console.log("Querying for chart 1: " + queries.chart1);
+		}}
+	));
 
 	api.get("/filters", wagner.invoke(function(db){
 		return function(req, res){
@@ -161,61 +138,16 @@ module.exports = function(wagner){
 				// "VIN": ["foo1", "foo2"],
 				// "I Step": ["foo1", "foo2"]
 			}
-			db.query("select distinct steuergeraet_sgbd from fehlerspeicher", function (error, results, fields) {
-				if (error) throw error;
-				var values = [];
-				for(var i in results){
-					values.push(results[i].steuergeraet_sgbd);
-			  	}
-			  	filters["SGBD"] = values;
-			  	db.query("select distinct fehler_ort_hex from fehlerspeicher", function (error, results, fields) {
-					if (error) throw error;
-					var values = [];
-					for(var i in results){
-						values.push(results[i].fehler_ort_hex);
+			let conn1 = mysql.createConnection(db);
+			conn1.connect(function(){
+				conn1.query("select filter_json from filters", function (error, results, fields) {
+					if (error){
+						console.log(error);
+						res.json({error: error});
+						return;
 					}
-					filters["FSP Hex Code"] = values;
-					db.query("select distinct flag_ereignis_dtc from fehlerspeicher", function (error, results, fields) {
-						if (error) throw error;
-						var values = [];
-						for(var i in results){
-							values.push(results[i].flag_ereignis_dtc);
-						}
-						filters["IS DTC"] = values;
-						db.query("select distinct fehlerspeicher_art from fehlerspeicher", function (error, results, fields) {
-							if (error) throw error;
-							var values = [];
-							for(var i in results){
-								values.push(results[i].fehlerspeicher_art);
-							}
-							filters["DTC Incident"] = values;
-							db.query("select distinct baureihe from fahrzeugdaten", function (error, results, fields) {
-								if (error) throw error;
-								var values = [];
-								for(var i in results){
-									values.push(results[i].baureihe);
-								}
-								filters["Serie"] = values;
-								db.query("select distinct fgnr from fahrzeugdaten", function (error, results, fields) {
-									if (error) throw error;
-									var values = [];
-									for(var i in results){
-										values.push(results[i].fgnr);
-									}
-									filters["VIN"] = values;
-									db.query("select distinct I_stufe_ho from fahrzeugdaten", function (error, results, fields) {
-										if (error) throw error;
-										var values = [];
-										for(var i in results){
-											values.push(results[i].I_stufe_ho);
-										}
-										filters["I Step"] = values;
-										res.json({filters: filters});
-									});
-								});
-							});
-						});
-					});
+					res.json({filters: JSON.parse(results[0].filter_json)});
+					conn1.end();
 				});
 			});
 	}}));

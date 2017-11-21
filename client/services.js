@@ -80,7 +80,7 @@ efasApp.service("charts", function($rootScope){
 
     var drawHorizontalBar = function(data, holder){
 
-
+    	console.log("creating chart for ", data);
     	$("#" + holder).height(container_space * data.draw_height + "px");
 
 		var labels = [];

@@ -18,12 +18,12 @@ require("./models")(wagner);
 app.use(express.static(__dirname + '/client')) ;
 app.use("/", require("./api")(wagner));
 
-setInterval(wagner.invoke(function(db){
-    return function(){
-    	console.log("keeping the connection alive");
-    	db.query('SELECT 1');
-	}
-}), 10000);
+// setInterval(wagner.invoke(function(db){
+//     return function(){
+//     	console.log("keeping the connection alive");
+//     	db.query('SELECT 1');
+// 	}
+// }), 10000);
 
 process.on('uncaughtException', function(err) {
   console.log('Caught exception: ' + err);
