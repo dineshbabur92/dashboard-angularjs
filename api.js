@@ -87,8 +87,12 @@ module.exports = function(wagner){
 				query = query[0] + appendConditions(query[1], req.body.filters, filterFieldMapping) + query[2];
 
 			var all_results = {};
-			let conn = mysql.createConnection(db);
-			conn.connect(function(){
+			// let conn = mysql.createConnection(db);
+			db.getConnection(function(error, conn){
+				if(error){
+					console.log("error", error);
+					throw error;
+				}
 				console.log("connected for ", chart);
 				conn.query(query, function (error, results, fields) {
 				// console.log("chart1 error: "+ error + "chart1 results: " + results);
@@ -99,7 +103,7 @@ module.exports = function(wagner){
 					}
 					all_results[chart] = results;
 					// console.log(all_results);
-					conn.end();
+					conn.release();
 					res.json({
 						results: all_results,
 						titles: {
@@ -138,16 +142,20 @@ module.exports = function(wagner){
 				// "VIN": ["foo1", "foo2"],
 				// "I Step": ["foo1", "foo2"]
 			}
-			let conn1 = mysql.createConnection(db);
-			conn1.connect(function(){
-				conn1.query("select filter_json from filters", function (error, results, fields) {
+			// let conn1 = mysql.createConnection(db);
+			db.getConnection(function(error, conn){
+				if(error){
+					console.log("error", error);
+					throw error;
+				}
+				conn.query("select filter_json from filters", function (error, results, fields) {
 					if (error){
 						console.log(error);
 						res.json({error: error});
 						return;
 					}
+					conn.release();
 					res.json({filters: JSON.parse(results[0].filter_json)});
-					conn1.end();
 				});
 			});
 	}}));

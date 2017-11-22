@@ -37,7 +37,8 @@ process.on('uncaughtException', function(err) {
 // // setup the logger 
 // app.use(logger('combined', {stream: accessLogStream}));
 
-app.listen(8080);
+var server = app.listen(7272);
+server.timeout = 1000000000;
 console.log("app listening in 8080!");
 
 

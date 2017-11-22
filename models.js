@@ -28,14 +28,14 @@ module.exports = function(wagner){
 		});
 
 		wagner.factory("db", function(){	
-			return {
+			return mysql.createPool({
 		  // host     : process.env.MARIADB_IP, //'localhost',
 		  host     : "54.166.100.3",
 		  port: 9900,
 		  user     : 'root',
 		  password : 'dinesh',
 		  database : 'bmw'
-		};
+		});
 		});
 	}
 

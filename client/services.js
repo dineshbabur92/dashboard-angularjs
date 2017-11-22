@@ -15,7 +15,7 @@ efasApp.service("charts", function($rootScope){
     	for(var i in data.data){
     		input_data.push({name: data.data[i][data.title_field], y: data.data[i][data.value_field]});
     	}
-    	console.log(data);
+    	// console.log(data);
 
         Highcharts.chart(holder, {
 	    chart: {
@@ -80,7 +80,7 @@ efasApp.service("charts", function($rootScope){
 
     var drawHorizontalBar = function(data, holder){
 
-    	console.log("creating chart for ", data);
+    	// console.log("creating chart for ", data);
     	$("#" + holder).height(container_space * data.draw_height + "px");
 
 		var labels = [];
