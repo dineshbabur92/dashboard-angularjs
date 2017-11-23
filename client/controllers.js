@@ -53,6 +53,7 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "charts", functi
     		delete $scope.selectedFilters[i];
     		$scope.getReport();
     	}
+    	$("[id*='-checkbox']").prop("checked", false);
     }
     //not used for now
     $scope.searchFilter = function(filter_name, event){
@@ -134,6 +135,9 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "charts", functi
     		if(!$scope.selectedFilters[elt.$parent.filter_name])
     			$scope.selectedFilters[elt.$parent.filter_name] = [];
 			$scope.selectedFilters[elt.$parent.filter_name].push(elt.item);
+			if($scope.selectedFilters[elt.$parent.filter_name].length == $scope.filters[elt.$parent.filter_name].length){
+				$scope.selectedFilters[elt.$parent.filter_name] = [];
+			}
 			// $log.log($scope.selectedFilters);
 			// $scope.isFilterChanged = true;
     	}
@@ -191,16 +195,17 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "charts", functi
 
     $scope.report_response = {};
     $scope.count = 0;
-	$scope.charts_needed = ["chart1", "chart2", "chart3", "chart4"];
+	$scope.charts_needed = ["chart1", "chart2", "chart3", "chart4", "chart5"];
+	$scope.alreadyFilterReceived = 0;
 
     $scope.$watch('count', function(newVal){
     	console.log("count changed: ", newVal);
-    	if(newVal == 4){
+    	if(newVal == 5){
     		$("#cover").css({"visibility": "hidden"});
 			$("#loader").css({"visibility": "hidden"});
 
 			console.log("overall report response ", $scope.report_response);
-			
+
 			var selectedFiltersArray = [];
 	        for(var i in $scope.selectedFilters){
 	            if(i=='Hour' || i=='Date')
@@ -222,7 +227,8 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "charts", functi
 			            title_field: response.data.category_fields[chart_requested],
 			            value_field: response.data.value_fields[chart_requested],
 			            draw_height: .497,
-		                selectedFilters: selectedFiltersArray.join("<br/>")
+		                selectedFilters: selectedFiltersArray.join("<br/>"),
+					color: "#24B8FD"
 			    	}, chart_requested);
 				}
 				else if(chart_requested==="chart5"){
@@ -240,13 +246,19 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "charts", functi
 			            category_field: response.data.category_fields[chart_requested],
 			            value_field: response.data.value_fields[chart_requested],
 			            draw_height: chart_requested==="chart3" ? .497 : 1,
-			            selectedFilters: selectedFiltersArray.join("<br/>")
+			            selectedFilters: selectedFiltersArray.join("<br/>"),
+					color: "#24B8FD"
 			    	}, chart_requested);
 				}
 
 			}
 
 			$scope.count = 0;
+			if(!$scope.alreadyFilterReceived){
+				$scope.getFilters();
+				$scope.alreadyFilterReceived = 1;
+			}
+			
     	}
     });
 
@@ -278,6 +290,9 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "charts", functi
 
     //load filters
     $scope.getFilters = function(){
+    	$("#cover").css({"visibility": "visible"});
+		$("#loader").css({"visibility": "visible"});
+
     	$http({
 			method: 'GET',
 			url: '/filters'
@@ -297,6 +312,10 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "charts", functi
 			// 	"E/E Priority": ["foo1", "foo2"]
 			// }
 			$scope.filters = response.data.filters;
+
+			$("#cover").css({"visibility": "hidden"});
+			$("#loader").css({"visibility": "hidden"});
+
 		}).then(function(error){
 			$log.log("error: " + error);
 		});
@@ -340,7 +359,7 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "charts", functi
      // $scope.setupLayout();
      
      // setTimeout(function(){
-     	$scope.getFilters();
+     	// $scope.getFilters();
 		// $scope.getReport();
      // }, 10000);
 	

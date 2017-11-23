@@ -2,9 +2,7 @@ var bodyparser = require("body-parser");
 var httpstatus = require("http-status");
 var express = require("express");
 var underscore = require("underscore");
-var queries_base = require("./to_drive/data/queries_10days");
-var mysql = require("mysql");
-
+var queries_base = require("./to_drive/data/queries");
 module.exports = function(wagner){
 
 	api = express.Router();
@@ -44,7 +42,22 @@ module.exports = function(wagner){
 		"FSP_Entry": "fehlerspeicher.fehler_ort_text",
 		"I_Step": "SUBSTRING_INDEX(SUBSTRING_INDEX(fahrzeugdaten.I_stufe_ho, '-', 3),'-',-2)",
 		"VIN": "fahrzeugdaten.fgnr"
+	}
 
+	var filterFieldMapping_3 = {
+
+		"SGBD": "steuergeraet_sgbd",
+		"FSP Hex Code": "fehler_ort_hex",
+		"IS DTC": "flag_ereignis_dtc",
+		"DTC Incident": "fehlerspeicher_art",
+		"Serie": "baureihe",
+		"VIN": "fgnr",
+		"I Step": "I_stufe_ho",
+		"Date": "auslese_datum",
+		"Hour": "hour(auslese_datum)",
+		"FSP_Entry": "fehler_ort_text",
+		"I_Step": "i_step",
+		"VIN": "fgnr"
 	}
 
 	function appendConditions(query, filters, fieldMapping){
@@ -62,7 +75,6 @@ module.exports = function(wagner){
 					continue;
 				}
 				query_values += ",'" + filters[i][j] + "'";
-				// query_values += "," + i=="IS DTC" ? "'" : ""  + filters[i][j] + i=="IS DTC" ? "'" : "";
 			}
 			query = query + " and " + fieldMapping[i] + " in (" + query_values + ")"
 		}
@@ -82,6 +94,10 @@ module.exports = function(wagner){
 						"Date": req.body.filters["Date"] ? req.body.filters["Date"] : [], 
 						"Hour": req.body.filters["Hour"] ? req.body.filters["Hour"] : []
 					}, filterFieldMapping);
+			}
+			else if(chart==="chart3"){
+				query = query[0] + appendConditions(query[1], req.body.filters, filterFieldMapping_3) + query[2];
+
 			}
 			else
 				query = query[0] + appendConditions(query[1], req.body.filters, filterFieldMapping) + query[2];
