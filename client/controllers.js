@@ -247,7 +247,7 @@ efasApp.controller("homeController",["$scope", "$log", "$http", "charts", functi
 			            value_field: response.data.value_fields[chart_requested],
 			            draw_height: chart_requested==="chart3" ? .497 : 1,
 			            selectedFilters: selectedFiltersArray.join("<br/>"),
-					color: "#24B8FD"
+				color: "#0072A7"   
 			    	}, chart_requested);
 				}
 

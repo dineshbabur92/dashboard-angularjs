@@ -15,21 +15,37 @@ efasApp.service("charts", function($rootScope){
     	for(var i in data.data){
     		input_data.push({name: data.data[i][data.title_field], y: data.data[i][data.value_field]});
     	}
-    	// console.log(data);
+    	console.log(data);
 
         Highcharts.chart(holder, {
 	    chart: {
 	        plotBackgroundColor: null,
 	        plotBorderWidth: null,
+			backgroundColor: '#f0f3f4',
 	        plotShadow: false,
-	        type: 'pie'
+	        type: 'pie',
+			style: {
+				fontFamily: 'Source Sans Pro'
+			}
 	    },
 	    title: {
-	        text: data.title
-	    },
+			text: data.title,
+			align: 'left',
+			style: {
+				"color":"#666",
+				"font-weight":'bold'
+			},
+			x: 0
+		},
 	    tooltip: {
 	        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b><br/>' + data.selectedFilters
 	    },
+		colors: [
+			"#004F74", "#0072A7", "#0092D6", "#008AE6", "#48C9B0", "#A3E2FF", "#A3E4D7", "#A3E4D7", "#E8F8F5"
+		],
+		exporting: {
+			enabled: false
+		},
 	    plotOptions: {
 	        pie: {
 		            allowPointSelect: true,
@@ -47,9 +63,7 @@ efasApp.service("charts", function($rootScope){
 		            showInLegend: true,
 		            events:{
 		            	click: function(e){
-		            		console.log("selected:", e.point.name);
 		            		filters[data.title_field] = e.point.name;
-		            		console.log("Filters on click: ", filters);
 		            		$rootScope.$apply();
 		            	}
 		            }
@@ -80,7 +94,7 @@ efasApp.service("charts", function($rootScope){
 
     var drawHorizontalBar = function(data, holder){
 
-    	// console.log("creating chart for ", data);
+
     	$("#" + holder).height(container_space * data.draw_height + "px");
 
 		var labels = [];
@@ -99,18 +113,24 @@ efasApp.service("charts", function($rootScope){
 
 		Highcharts.chart(holder, {
 		    chart: {
-		        type: 'bar'
-		        // ,
-		        // events: {
-	         //        click: function(e) {
-	         //            console.log("highchart event", e);
-	         //        }
-          //   	}
-		        // marginRight: holder === "chart4" ? undefined : 50
+		        type: 'bar',
+				backgroundColor: '#f0f3f4',
+				style: {
+					fontFamily: 'Source Sans Pro'
+				}
 		    },
-		    title: {
-		        text: data.title
-		    },
+			title: {
+				text: data.title,
+				align: 'left',
+				style: {
+					"font-weight":'bold',
+					"color": '#666'
+				},
+				x: 0
+			},
+			legend: {
+				enabled: false
+			},
 		    xAxis: {
 		        categories: labels,
 		        title: {
@@ -129,6 +149,9 @@ efasApp.service("charts", function($rootScope){
 		        // },
 		        // width: holder === "chart4" ? (($("#"+holder).width() *.05) + "px") : undefined,
 		    },
+			exporting: {
+				enabled: false
+			},
 		    yAxis: {
 		        min: 0,
 		        tickInterval: holder === "chart4" ? 1 : undefined,
@@ -184,7 +207,8 @@ efasApp.service("charts", function($rootScope){
 		    // tooltip: {
 		    //     pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
 		    // },
-		    legend: {
+			
+		    /*legend: {
 		        layout: 'vertical',
 		        align: holder == "chart4" ? "left" : "right",
 		        verticalAlign: holder == "chart4" ? "top" : "bottom",
@@ -194,10 +218,13 @@ efasApp.service("charts", function($rootScope){
 		        borderWidth: .5,
 		        backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
 		        // shadow: true
-		    },
+		    },*/
 		    credits: {
 		        enabled: false
 		    },
+			colors: [
+				data.color
+			],
 		    series: [{
 		        name: data.value_field,
 		        data: values
