@@ -30,6 +30,7 @@ module.exports = function(wagner){
 		wagner.factory("db", function(){	
 			return mysql.createPool({
 		  // host     : process.env.MARIADB_IP, //'localhost',
+		  // host: "localhost",
 		  connectionLimit: 100,
 		  host     : "54.166.100.3",
 		  port: 9900,
