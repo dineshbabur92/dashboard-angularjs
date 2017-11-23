@@ -15,7 +15,7 @@ efasApp.service("charts", function($rootScope){
     	for(var i in data.data){
     		input_data.push({name: data.data[i][data.title_field], y: data.data[i][data.value_field]});
     	}
-    	console.log(data);
+    	console.log("pie data", data);
 
         Highcharts.chart(holder, {
 	    chart: {
